@@ -2,7 +2,7 @@
 
 ## Direction
 
-A single-page personal profile that borrows the *visual grammar* of a modern crypto product site without borrowing its content: near-black surfaces, enormous tight display type, mono metadata, hairline borders, one restrained accent, and a few bespoke "instrument panel" moments (a workflow diagram and a stack readout).
+A single-page personal profile that borrows the *visual grammar* of a modern crypto product site without borrowing its content: near-black surfaces, enormous tight display type, mono metadata, hairline borders, one restrained accent, and a few bespoke "instrument panel" moments (a capability sheet and a stack readout).
 
 The result should feel like a working desk, not a résumé template.
 
@@ -11,18 +11,17 @@ The result should feel like a working desk, not a résumé template.
 Verified from the reference site:
 
 - Theme color `#0a0a0a`
-- Section rhythm: hero → two product cards → 4-step stepper → flow/diagram → code block → stats → footer
+- Section rhythm: hero → capability sheet (two text columns + four-step loop) → project cards → code block → stats → timeline → contact → footer
 - Card surfaces with `inset 0 0 0 1px rgba(255,255,255,.08)` borders
 - Display type with very tight tracking; mono labels for metadata
 - Short, pill-shaped primary CTAs
-- Large ghost numerals in step sections
+- Numbered process steps
 
 Deliberately changed:
 
 - **Accent:** electric green `#7cffb2` instead of the reference's blue. The brief asked for one distinct accent (green / violet / amber), and green gives the neutral dark palette a sharper, more personal signature.
 - **Fonts:** Inter Tight for display/body and Geist Mono for labels. Poppins is not used; the wordmark is a tight Inter Tight lockup with an accent dot.
-- **Hero visual:** a "profile ticket" card built from live content instead of a 3D canvas scene. It keeps the layered-card, inset-border, radial-glow language while staying static and fast.
-- **Flow section:** a hand-built inline SVG diagram with dashed connectors and a repeat loop, rather than a data-driven market visualization.
+- **Hero visual:** a neutral frosted-glass profile card built from live content instead of a 3D canvas scene. It uses backdrop blur, a translucent surface, a specular sheen, a cool ambient aura, and inset highlights.
 - **All copy and data:** original placeholders. No text, logo, or image from the reference is used.
 
 ## Tokens
@@ -42,17 +41,18 @@ Defined as runtime CSS variables in `src/styles/global.css`: light on `:root`, d
 | `--accent` | `#086b3c` | `#7cffb2` | Links, active states, markers |
 | `--accent-ink` | `#ffffff` | `#06130b` | Text on accent |
 | `--accent-soft` | `rgba(8,107,60,.10)` | `rgba(124,255,178,.10)` | Pills, washes |
-| `--ghost` | `#e4e4e7` | `#1f2026` | Ghost step numerals |
-| `--code-text` | `#24292f` | `#d7dbe0` | Code base |
-| `--code-key` | `#0550ae` | `#8ea9c9` | JSON keys |
-| `--code-string` | `#0a6b3d` | `#b9d8ff` | JSON strings |
-| `--code-number` | `#b45309` | `#ffb547` | JSON numbers |
-| `--shadow-card/lift/ticket/stage/panel` | soft neutral shadows | deep black + accent glow | Depth by mode |
-| `--radius-card` | `20px` | `20px` | Card radius |
+| `--code-text` | `#1e1e1e` | `#d4d4d4` | Code base |
+| `--code-key` | `#0451a5` | `#9cdcfe` | JSON keys |
+| `--code-string` | `#a31515` | `#ce9178` | JSON strings |
+| `--code-number` | `#098658` | `#b5cea8` | JSON numbers |
+| `--ide-*` | VS Code Light+ | VS Code Dark+ | Editor chrome |
+| `--glass-bg/border/sheen/aura` | translucent white | translucent cool dark | Frosted profile card |
+| `--shadow-card/lift/glass/panel/ide` | soft neutral shadows | deep black shadows | Depth by mode |
+| `--radius-card` | `12px` | `12px` | Card radius |
 | `--font-display` | Inter Tight | Inter Tight | Display and body |
 | `--font-mono` | Geist Mono | Geist Mono | Labels, numbers, code |
 
-Light mode uses softer glows (`--ambient-glow`, `--ticket-wash`) and neutral card shadows instead of relying only on 1px borders. Dark mode keeps the original deep-black surfaces and accent bloom.
+Light mode uses softer glows (`--ambient-glow`) and neutral card shadows. Dark mode keeps the deep-black surfaces and neutral glass shadows.
 
 ### Contrast (approximate sRGB)
 
@@ -98,15 +98,13 @@ Spacing:
 
 ## Signature components
 
-**Profile ticket (hero).** Two scaled ghost cards sit behind a radial-gradient panel. Inside: mono kicker, availability pill, avatar initials, three-cell fact grid, and a footer rule. The accent glow is the only large soft gradient on the page.
+**Profile glass card (hero).** A neutral frosted-glass panel with a 1px translucent border, a soft specular sheen, inset highlights, backdrop blur, and a blurred cool ambient aura behind it. Inside: mono kicker, neutral availability pill, avatar photo (initials fallback), a three-cell glass fact grid, and a footer rule. No green accent appears on the card.
 
-**Pillars.** Two equal cards with an eyebrow index, a small accent icon tile, a large statement, a description, a ticked list, and a text link. Hover lifts 3px and adds a faint accent bloom.
+**Capability sheet.** One panel combines "what I do" with "how I work": two text columns for Backend / Cloud & Delivery, then a compact four-column process row (`01–04`) with small accent numbers. Hairlines separate the halves on desktop; everything stacks into one column on mobile. No icons, bullets, or CTAs inside the columns.
 
-**Process stepper.** Four columns on a top rule, separated by vertical rules on desktop. Large ghost numerals (`--ghost`) echo the reference's numbered steps while keeping the copy readable.
+**Project cards.** A 16:9 local SVG banner, meta row, title, short description, tech tags, and a footer with a native expandable tech-stack panel plus a GitHub icon link. The panel summarizes the actual repo stack (Gin/GORM/PostgreSQL, CodeIgniter 4/Tailwind, Docker/Fly.io, GitHub Actions). Banners are replaceable image paths.
 
-**Workflow diagram.** An inset panel with a window bar (three dots + `workflow / v1.0`), an SVG with four nodes, dashed connectors, an accent-highlighted "Build" node, and a return loop. On mobile the SVG is replaced by a vertical list, so nothing shrinks below legibility.
-
-**Stack readout.** A split section: editable principles on the left, a fake `profile.json` window on the right. The JSON is generated from `profile.stack` and syntax-highlighted at build time; a copy button writes the raw JSON to the clipboard.
+**Stack readout.** A VS Code-inspired editor window: title bar with traffic lights, active/inactive tabs, breadcrumb, activity bar icons, line-number gutter, VS Code syntax colors, and a status bar. The left Currently/Focus tiles are back to the default neutral surface. JSON is generated from `profile.stack` and syntax-highlighted at build time; the copy button writes the raw JSON to the clipboard.
 
 **Stats.** A four-column rule-bounded row with tabular numerals that count up once on view.
 
@@ -120,7 +118,6 @@ Spacing:
 - Hover lifts: 220ms, 3px, with a soft accent shadow
 - Counters: 1100ms cubic ease-out, once
 - Marquee: 55s linear loop, pauses on hover
-- Flow dashes: 2.4s linear loop
 - All of the above are disabled or reduced under `prefers-reduced-motion: reduce`
 - Content is visible by default when JavaScript is unavailable; the `js` class is added in the head before reveals are hidden
 
@@ -133,7 +130,7 @@ Spacing:
 - Theme menu uses `role="menu"` / `menuitemradio`, `aria-checked`, `aria-expanded`, arrow/Home/End keys, Enter/Space select, Escape close + focus return, and a click-outside close
 - Theme button is 40×40, labelled with the current mode, and has a tooltip/title
 - Copy buttons announce their action; the copied state is visual text
-- Decorative marquee is `aria-hidden`; the flow SVG has an accessible name and a text alternative on mobile
+- Decorative marquee is `aria-hidden`
 - Light muted text `#5f5f68` / `#6e6e77` on white is 5.9:1 / 5.1:1; dark muted text `#a3a3a3` / `#8a8a93` on black is 7.7:1 / 5.8:1
 - Light accent `#086b3c` on white is 6.7:1; dark accent `#7cffb2` on black is 15.4:1; accent-ink on accent is high contrast
 - Reduced motion respected at both the CSS and script level, including the icon swap and color transitions
@@ -142,8 +139,8 @@ Spacing:
 
 Tested breakpoints:
 
-- 390px: single column, full-width nav sheet, stacked pillars/steps/timeline, vertical flow list, code block scrolls inside its panel, no page-level horizontal scroll
-- 768px: two-column project and pillar grids, flow SVG shown
+- 390px: single column, full-width nav sheet, stacked pillars/process/timeline, project cards stack, code block scrolls inside its panel, no page-level horizontal scroll
+- 768px: two-column project and pillar grids, two-column process loop
 - 1280–1440px: two-column hero, four-column process and stats, sticky side columns
 
 ## SEO and metadata

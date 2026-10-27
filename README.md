@@ -31,11 +31,9 @@ Open [`src/content/profile.ts`](src/content/profile.ts). Search for `TODO` to fi
 | Section | Field | What it controls |
 | --- | --- | --- |
 | Navbar | `name`, `wordmark`, `nav`, `ctas` | Brand, links, and the contact button |
-| Hero | `headline`, `lede`, `tagline`, `heroCard`, `marquee` | Headline (with highlight word), intro, ticket card, ticker |
-| Pillars | `pillars` | The two large "what I do" cards |
-| Process | `process` | Four-step stepper |
-| Flow | `flow` | Diagram title, nodes, and caption |
-| Work | `projectsKicker`, `projectsTitle`, `projectsLede`, `projects` | Project grid |
+| Hero | `headline`, `lede`, `tagline`, `avatar`, `cv`, `heroCard`, `marquee` | Headline, photo, CV download, glass profile card, icon ticker |
+| What I do / How I work | `pillars`, `process` | Two-column capability sheet with a compact four-step loop |
+| Work | `projectsKicker`, `projectsTitle`, `projectsLede`, `projects` | Project cards: banner, tags, expandable tech stack, GitHub link |
 | Stack | `stack` | Code block content, focus areas, principles |
 | Numbers | `stats` | Animated stat row |
 | About | `aboutKicker`, `aboutTitle`, `aboutLede`, `experience` | Timeline |
@@ -48,7 +46,10 @@ Things worth knowing:
 - **Highlight words** use `{ before, highlight, after }` — the middle value gets the white marker treatment.
 - **`tagline`** can be left empty; the hero then builds `role · location · availability` automatically.
 - **Stats** use `value` (number, animated on scroll) plus an optional `suffix` such as `+`.
-- **Project `href`** values are `"#"` placeholders. Point them at real case studies.
+- **Marquee** items are `{ label, icon }`; `TechIcon` resolves brands via `simple-icons`, with lucide for REST/Cloud.
+- **CV** points to `public/cv/fikri-aslam-cv.pdf`; replace the file and keep the path. The hero button downloads it.
+- **Avatar** points to `public/profile-picture.jpeg`; replace the image to update the hero card.
+- **Project `href`** is the GitHub repo URL; `image` is the banner and `stack` is the expandable detail.
 - **Social icons** support `github`, `linkedin`, `x`, and `mail`.
 - **Stack JSON** in the code block is generated from `profile.stack`, so editing the data updates the snippet automatically.
 
@@ -126,8 +127,6 @@ src/
     Navbar.astro
     Hero.astro
     Pillars.astro
-    Process.astro
-    Flow.astro
     Projects.astro
     CodeBlock.astro
     Stats.astro
@@ -136,6 +135,7 @@ src/
     Footer.astro
     SectionHead.astro
     ThemeToggle.astro
+    TechIcon.astro
     Icon.astro
     Social.astro
   lib/og.ts              ← shared OG SVG builder
@@ -158,9 +158,9 @@ CHANGELOG.md
 - Light and dark palettes both meet WCAG AA for text, muted text, links, buttons, and focus rings.
 - Blocking head script prevents a flash of the wrong theme; JS-disabled browsers fall back to `prefers-color-scheme`.
 - Semantic landmarks, one `h1`, visible focus rings, skip link, and labelled controls.
-- `prefers-reduced-motion` disables reveals, counters, marquee, dashed flow animation, and the theme icon transition.
+- `prefers-reduced-motion` disables reveals, counters, marquee, and the theme icon transition.
 - Responsive from 360px to 1440px; verified no horizontal overflow at 390px.
-- No images are used for page content, so there is nothing to lazy-load or optimize.
+- Project banners are local SVGs (lazy-loaded) and can be swapped for screenshots by replacing the `image` paths in `profile.ts`.
 
 ## Attribution
 

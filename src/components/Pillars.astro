@@ -1,60 +1,62 @@
 ---
 import { profile } from "../content/profile";
 import SectionHead from "./SectionHead.astro";
-import Icon from "./Icon.astro";
 ---
 
 <section class="wrap pt-[110px] md:pt-[140px]">
   <SectionHead
     kicker="WHAT I DO"
-    title="Two halves of the same job"
-    lede="Good products are not designed and then built. The shape and the implementation argue with each other until both get sharper."
+    title="Two disciplines, one loop"
+    lede="Backend services and the delivery path around them. The same four moves take a contract from first sketch to production."
   />
 
-  <div class="mt-12 grid gap-4 md:grid-cols-2">
-    {
-      profile.pillars.map((pillar, index) => (
-        <article
-          class="card hover-lift reveal group relative flex flex-col overflow-hidden p-7 md:p-9"
-          style={`--reveal-delay:${index * 90}ms`}
-        >
-          <div class="flex items-start justify-between gap-4">
-            <span class="mono text-[12px] text-accent">{pillar.index}</span>
-            <span class="mono text-[10.5px] uppercase tracking-[0.1em] text-ink-3">
+  <div class="card reveal mt-10 overflow-hidden">
+    <div class="grid md:grid-cols-2">
+      {
+        profile.pillars.map((pillar, index) => (
+          <article
+            class={`p-6 md:p-8 ${
+              index > 0 ? "border-t border-line md:border-l md:border-t-0" : ""
+            }`}
+          >
+            <span class="mono text-[10.5px] uppercase tracking-[0.1em] text-accent">
               {pillar.label}
             </span>
-          </div>
+            <h3 class="mt-5 max-w-[440px] text-[clamp(26px,2.6vw,34px)] font-semibold leading-[1.05] tracking-[-0.045em]">
+              {pillar.title}
+            </h3>
+            <p class="mt-4 max-w-[520px] text-[15.5px] leading-[1.6] text-ink-2">
+              {pillar.description}
+            </p>
+          </article>
+        ))
+      }
+    </div>
 
-          <div class="mt-10 grid h-11 w-11 place-items-center rounded-[12px] bg-accent/10 text-accent shadow-[inset_0_0_0_1px_var(--accent-ring)]">
-            <Icon name={pillar.icon} size={20} />
-          </div>
+    <div id="process" class="border-t border-line p-6 md:p-8">
+      <p class="kick"><span class="dot"></span>HOW I WORK</p>
 
-          <h3 class="mt-6 max-w-[420px] text-[clamp(26px,2.6vw,34px)] font-semibold leading-[1.05] tracking-[-0.045em]">
-            {pillar.title}
-          </h3>
-
-          <p class="mt-4 max-w-[500px] flex-1 text-[15.5px] leading-[1.6] text-ink-2">
-            {pillar.description}
-          </p>
-
-          <ul class="mt-7 space-y-3 border-t border-line pt-6">
-            {pillar.bullets.map((bullet) => (
-              <li class="flex items-start gap-3 text-[14.5px] text-ink">
-                <span class="mt-[7px] h-2 w-2 flex-none rounded-full shadow-[inset_0_0_0_2.5px_var(--color-accent)]" />
-                {bullet}
-              </li>
-            ))}
-          </ul>
-
-          <a
-            href={pillar.href}
-            class="mt-8 inline-flex items-center gap-2 text-[14px] font-semibold text-ink transition-colors group-hover:text-accent"
-          >
-            {pillar.cta}
-            <Icon name="arrow-right" size={15} />
-          </a>
-        </article>
-      ))
-    }
+      <ol class="mt-4 grid border-t border-line sm:grid-cols-2 lg:grid-cols-4">
+        {
+          profile.process.map((step, index) => (
+            <li
+              class={`border-b border-line py-4 pr-5 last:border-b-0 ${
+                index >= 2 ? "sm:border-b-0" : ""
+              } ${index % 2 === 1 ? "sm:border-l sm:border-line sm:pl-5" : ""} ${
+                index > 0 ? "lg:border-l lg:border-line lg:pl-5" : ""
+              } lg:border-b-0`}
+            >
+              <div class="flex items-baseline gap-2">
+                <span class="mono text-[10.5px] text-accent">{step.index}</span>
+                <h3 class="text-[17px] font-semibold tracking-[-0.03em]">{step.title}</h3>
+              </div>
+              <p class="mt-1.5 max-w-[250px] text-[13px] leading-[1.5] text-ink-2">
+                {step.description}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </div>
 </section>

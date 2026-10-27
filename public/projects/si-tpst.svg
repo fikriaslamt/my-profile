@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a0a"/>
+      <stop offset="1" stop-color="#0d1713"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="82%" cy="18%" r="58%">
+      <stop offset="0" stop-color="#7cffb2" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#7cffb2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#8a8a93" letter-spacing="1.5">
+    <text x="80" y="86">PROJECT / 02</text>
+    <text x="1120" y="86" text-anchor="end">2024</text>
+  </g>
+  <line x1="80" y1="112" x2="1120" y2="112" stroke="rgba(255,255,255,0.12)"/>
+
+  <g transform="translate(650 145)">
+    <rect width="460" height="300" rx="16" fill="#111113" stroke="rgba(255,255,255,0.12)"/>
+    <path d="M0 16a16 16 0 0 1 16-16h428a16 16 0 0 1 16 16v26H0z" fill="#16161a"/>
+    <circle cx="22" cy="22" r="4" fill="#3a3a3f"/>
+    <circle cx="38" cy="22" r="4" fill="#3a3a3f"/>
+    <circle cx="54" cy="22" r="4" fill="#3a3a3f"/>
+    <text x="438" y="27" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#7cffb2">LIVE</text>
+    <line x1="0" y1="42" x2="460" y2="42" stroke="rgba(255,255,255,0.08)"/>
+
+    <rect x="22" y="62" width="128" height="58" rx="10" fill="#16161a"/>
+    <rect x="164" y="62" width="128" height="58" rx="10" fill="#16161a"/>
+    <rect x="306" y="62" width="132" height="58" rx="10" fill="#16161a"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="36" y="82" font-size="9" fill="#8a8a93">ENTRIES</text>
+      <text x="36" y="106" font-size="19" fill="#f5f5f5">1,240</text>
+      <text x="178" y="82" font-size="9" fill="#8a8a93">SITES</text>
+      <text x="178" y="106" font-size="19" fill="#f5f5f5">12</text>
+      <text x="320" y="82" font-size="9" fill="#8a8a93">TODAY</text>
+      <text x="320" y="106" font-size="19" fill="#7cffb2">86</text>
+    </g>
+
+    <line x1="22" y1="146" x2="438" y2="146" stroke="rgba(255,255,255,0.08)"/>
+    <g>
+      <circle cx="34" cy="170" r="4" fill="#7cffb2"/>
+      <rect x="50" y="166" width="120" height="8" rx="4" fill="#2a2a30"/>
+      <rect x="300" y="166" width="60" height="8" rx="4" fill="#232329"/>
+      <text x="438" y="174" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#7cffb2">OK</text>
+
+      <circle cx="34" cy="204" r="4" fill="#7cffb2"/>
+      <rect x="50" y="200" width="160" height="8" rx="4" fill="#2a2a30"/>
+      <rect x="300" y="200" width="60" height="8" rx="4" fill="#232329"/>
+      <text x="438" y="208" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#7cffb2">OK</text>
+
+      <circle cx="34" cy="238" r="4" fill="#3a3a3f"/>
+      <rect x="50" y="234" width="100" height="8" rx="4" fill="#2a2a30"/>
+      <rect x="300" y="234" width="60" height="8" rx="4" fill="#232329"/>
+      <text x="438" y="242" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#8a8a93">WAIT</text>
+    </g>
+  </g>
+
+  <rect x="80" y="500" width="56" height="4" rx="2" fill="#7cffb2"/>
+  <text x="80" y="584" font-family="Inter Tight, Inter, ui-sans-serif, sans-serif" font-weight="600" font-size="76" letter-spacing="-4" fill="#f5f5f5">SI TPST Unila</text>
+  <text x="82" y="622" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#8a8a93">CODEIGNITER 4 · PHP · TAILWIND CSS</text>
+</svg>

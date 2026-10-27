@@ -2,6 +2,7 @@
 import { profile } from "../content/profile";
 import SectionHead from "./SectionHead.astro";
 import Icon from "./Icon.astro";
+import { Files, Search, GitBranch, Settings } from "@lucide/astro";
 
 const stack = profile.stack;
 
@@ -15,6 +16,11 @@ const data = {
 };
 
 const raw = JSON.stringify(data, null, 2);
+const lineNumbers = raw
+  .split("\n")
+  .map((_, index) => String(index + 1))
+  .join("\n");
+
 const escaped = raw.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const highlighted = escaped.replace(
   /("(?:\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")(\s*:)?|\b(true|false|null)\b|-?\b\d+(?:\.\d+)?\b/g,
@@ -33,7 +39,7 @@ const highlighted = escaped.replace(
     <div class="min-w-0 lg:sticky lg:top-28">
       <SectionHead kicker={stack.kicker} title={stack.title} lede={stack.lede} />
 
-      <dl class="reveal mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[14px] bg-line">
+      <dl class="reveal mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[10px] bg-line">
         <div class="bg-paper px-4 py-3.5">
           <dt class="mono text-[10px] uppercase tracking-[0.08em] text-ink-3">Currently</dt>
           <dd class="mt-1.5 text-[13.5px] leading-[1.45] text-ink-2">{stack.currently}</dd>
@@ -64,18 +70,26 @@ const highlighted = escaped.replace(
     </div>
 
     <div class="reveal min-w-0" style="--reveal-delay:100ms">
-      <div class="overflow-hidden rounded-[18px] bg-card shadow-[var(--shadow-panel)]">
-        <div class="flex items-center gap-2 border-b border-line px-4 py-3">
-          <span class="h-2 w-2 rounded-full bg-ink-3/40" aria-hidden="true"></span>
-          <span class="h-2 w-2 rounded-full bg-ink-3/40" aria-hidden="true"></span>
-          <span class="h-2 w-2 rounded-full bg-ink-3/40" aria-hidden="true"></span>
-          <span class="mono ml-2 text-[11px] text-ink-3">{stack.filename}</span>
+      <div
+        class="overflow-hidden rounded-[12px] border border-[var(--ide-border)] bg-[var(--ide-bg)] shadow-[var(--shadow-ide)]"
+      >
+        <div
+          class="flex items-center gap-2 border-b border-[var(--ide-border)] bg-[var(--ide-chrome)] px-3 py-2"
+        >
+          <div class="flex items-center gap-1.5" aria-hidden="true">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
+          </div>
+          <span class="mono ml-1 min-w-0 truncate text-[10.5px] text-[var(--ide-muted)]">
+            {stack.filename} — fikri-aslam
+          </span>
 
           <button
             type="button"
             data-copy
             data-target="stack-code"
-            class="pill ml-auto transition-colors hover:text-ink"
+            class="ml-auto flex flex-none items-center gap-1.5 rounded-[4px] px-2 py-1 text-[10px] text-[var(--ide-muted)] transition-colors hover:bg-[var(--ide-tab)] hover:text-[var(--ide-text)]"
             aria-label="Copy stack JSON"
           >
             <Icon name="copy" size={12} />
@@ -83,11 +97,71 @@ const highlighted = escaped.replace(
           </button>
         </div>
 
-        <pre class="min-w-0 overflow-x-auto p-5 md:p-6"><code
-            id="stack-code"
-            class="mono block text-[12.5px] leading-[1.75] text-code-text"
-            set:html={highlighted}
-          ></code></pre>
+        <div
+          class="flex items-end gap-0 overflow-x-auto border-b border-[var(--ide-border)] bg-[var(--ide-chrome)] px-2"
+          aria-hidden="true"
+        >
+          <div
+            class="flex flex-none items-center gap-2 border-t-2 border-[var(--ide-accent)] bg-[var(--ide-bg)] px-3 py-2 text-[11px] text-[var(--ide-text)]"
+          >
+            <span class="mono text-[10px] text-[var(--code-key)]">{ }</span>
+            {stack.filename}
+            <span class="mono text-[11px] text-[var(--ide-muted)]">×</span>
+          </div>
+          <div
+            class="flex flex-none items-center gap-2 px-3 py-2 text-[11px] text-[var(--ide-muted)]"
+          >
+            README.md
+          </div>
+        </div>
+
+        <div
+          class="flex items-center gap-1.5 border-b border-[var(--ide-border)] px-4 py-1.5 text-[10px] text-[var(--ide-muted)]"
+          aria-hidden="true"
+        >
+          <span class="mono">src</span>
+          <span class="text-[var(--ide-border)]">/</span>
+          <span class="mono">content</span>
+          <span class="text-[var(--ide-border)]">/</span>
+          <span class="mono text-[var(--ide-text)]">{stack.filename}</span>
+        </div>
+
+        <div class="flex">
+          <div
+            class="hidden w-9 flex-none flex-col items-center gap-4 border-r border-[var(--ide-border)] bg-[var(--ide-activity)] py-3 sm:flex"
+            aria-hidden="true"
+          >
+            <Files size={15} class="text-[var(--ide-text)]" />
+            <Search size={15} class="text-[var(--ide-muted)]" />
+            <GitBranch size={15} class="text-[var(--ide-muted)]" />
+            <Settings size={15} class="text-[var(--ide-muted)]" />
+          </div>
+
+          <div class="flex min-w-0 flex-1">
+            <pre
+              class="mono w-10 flex-none select-none overflow-hidden border-r border-[var(--ide-border)] py-4 pr-2 text-right text-[12.5px] leading-[1.75] text-[var(--ide-line-number)]"
+              aria-hidden="true">{lineNumbers}</pre>
+            <pre class="mono min-w-0 flex-1 overflow-x-auto py-4 pl-4 pr-4"><code
+                id="stack-code"
+                class="block text-[12.5px] leading-[1.75] text-code-text"
+                set:html={highlighted}
+              ></code></pre>
+          </div>
+        </div>
+
+        <div
+          class="mono flex items-center gap-3 bg-[var(--ide-status)] px-3 py-1 text-[9.5px] text-[var(--ide-status-text)]"
+          aria-hidden="true"
+        >
+          <span>main*</span>
+          <span>0 errors</span>
+          <div class="ml-auto flex items-center gap-3">
+            <span class="hidden sm:inline">Ln 1, Col 1</span>
+            <span>UTF-8</span>
+            <span>JSON</span>
+            <span>Prettier</span>
+          </div>
+        </div>
       </div>
 
       <p class="mono mt-4 flex items-center gap-2 text-[11px] text-ink-3">

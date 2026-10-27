@@ -1,6 +1,7 @@
 ---
 import { profile } from "../content/profile";
 import Icon from "./Icon.astro";
+import TechIcon from "./TechIcon.astro";
 
 const { headline } = profile;
 const tagline =
@@ -42,9 +43,9 @@ const tagline =
             {profile.ctas.primary.label}
             <Icon name="arrow-down" size={16} />
           </a>
-          <a href={profile.ctas.secondary.href} class="btn btn-line">
-            {profile.ctas.secondary.label}
-            <Icon name="arrow-up-right" size={16} />
+          <a href={profile.cv.href} download={profile.cv.filename} class="btn btn-line">
+            {profile.cv.label}
+            <Icon name="download" size={16} />
           </a>
         </div>
 
@@ -57,35 +58,35 @@ const tagline =
       </div>
 
       <div class="reveal relative" style="--reveal-delay:200ms">
-        <div class="relative mx-auto w-full max-w-[430px] pb-6">
-          <div
-            class="card absolute inset-x-4 -bottom-1 top-4 scale-[0.96] opacity-40"
-            aria-hidden="true"
-          >
-          </div>
-          <div
-            class="card absolute inset-x-8 -bottom-4 top-8 scale-[0.92] opacity-20"
-            aria-hidden="true"
-          >
-          </div>
-
-          <div
-            class="ticket-glow relative rounded-[24px] p-6 shadow-[var(--shadow-ticket)]"
-          >
+        <div class="relative mx-auto w-full max-w-[430px]">
+          <div class="glass-aura" aria-hidden="true"></div>
+          <div class="liquid-glass relative z-10 rounded-[12px] p-6">
             <div class="flex items-center justify-between gap-3">
               <span class="kick">{profile.heroCard.kicker}</span>
-              <span class="pill pill-ok">
-                <span class="dot"></span>
+              <span class="glass-pill">
+                <span class="h-1.5 w-1.5 rounded-full bg-ink-2"></span>
                 {profile.availability}
               </span>
             </div>
 
             <div class="mt-7 flex items-center gap-3.5">
-              <div
-                class="grid h-[52px] w-[52px] flex-none place-items-center rounded-full bg-accent text-[13px] font-bold tracking-[-0.03em] text-accent-ink shadow-[inset_0_0_0_1px_var(--border-strong)]"
-              >
-                {profile.initials}
-              </div>
+              {
+                profile.avatar ? (
+                  <img
+                    src={profile.avatar}
+                    alt={`${profile.name} profile picture`}
+                    width="64"
+                    height="80"
+                    loading="eager"
+                    decoding="async"
+                    class="h-20 w-16 flex-none rounded-[4px] object-cover shadow-[0_0_0_1px_var(--border-strong)]"
+                  />
+                ) : (
+                  <div class="grid h-20 w-16 flex-none place-items-center rounded-[4px] bg-ink text-[15px] font-bold tracking-[-0.03em] text-paper shadow-[inset_0_0_0_1px_var(--border-strong)]">
+                    {profile.initials}
+                  </div>
+                )
+              }
               <div class="min-w-0">
                 <b class="block truncate text-[20px] font-semibold tracking-[-0.03em]">
                   {profile.name}
@@ -101,10 +102,10 @@ const tagline =
               <span>{profile.timezone}</span>
             </div>
 
-            <div class="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-[14px] bg-line">
+            <div class="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-[10px] bg-line">
               {
                 profile.heroCard.facts.map((fact) => (
-                  <div class="bg-paper px-3 py-3.5">
+                  <div class="glass-cell px-3 py-3.5">
                     <span class="mono block text-[10px] uppercase tracking-[0.05em] text-ink-3">
                       {fact.label}
                     </span>
@@ -118,7 +119,7 @@ const tagline =
 
             <div class="mt-6 flex items-center justify-between border-t border-line pt-4">
               <span class="mono text-[11px] text-ink-3">{profile.heroCard.label}</span>
-              <span class="grid h-8 w-8 place-items-center rounded-full bg-ink text-paper">
+              <span class="grid h-8 w-8 place-items-center rounded-md bg-ink text-paper">
                 <Icon name="arrow-up-right" size={15} />
               </span>
             </div>
@@ -131,9 +132,9 @@ const tagline =
       <div class="marquee-track">
         {
           [...profile.marquee, ...profile.marquee].map((item) => (
-            <span class="mono flex items-center gap-3 px-5 text-[11px] uppercase tracking-[0.09em] text-ink-3">
-              <span class="h-1 w-1 rounded-full bg-ink-3/50" />
-              {item}
+            <span class="mono flex items-center gap-2.5 px-5 text-[11px] uppercase tracking-[0.09em] text-ink-3">
+              <TechIcon name={item.icon} size={13} />
+              {item.label}
             </span>
           ))
         }

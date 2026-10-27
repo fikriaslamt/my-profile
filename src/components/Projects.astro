@@ -2,9 +2,11 @@
 import { profile } from "../content/profile";
 import SectionHead from "./SectionHead.astro";
 import Icon from "./Icon.astro";
+import Social from "./Social.astro";
 
 const statusClass = (status: string) =>
   status === "Shipped" ? "pill-ok" : status === "In progress" ? "pill-acc" : "";
+const isInProgress = (status: string) => status === "In progress";
 ---
 
 <section id="work" class="wrap pt-[110px] md:pt-[140px]">
@@ -22,44 +24,87 @@ const statusClass = (status: string) =>
   <div class="mt-12 grid gap-4 md:grid-cols-2">
     {
       profile.projects.map((project, index) => (
-        <a
-          href={project.href}
-          class="card hover-lift reveal group flex flex-col p-7 md:p-8"
+        <article
+          class="card hover-lift reveal group flex flex-col overflow-hidden"
           style={`--reveal-delay:${index * 80}ms`}
         >
-          <div class="flex items-center justify-between gap-4">
-            <span class="mono text-[11px] text-ink-3">
-              {project.index} / {project.year}
-            </span>
-            <span class={`pill ${statusClass(project.status)}`}>
-              {project.status === "In progress" && <span class="dot"></span>}
-              {project.status}
-            </span>
+          <div class="relative aspect-[16/9] overflow-hidden border-b border-line bg-card-2">
+            <img
+              src={project.image}
+              alt={`${project.title} project banner`}
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
           </div>
 
-          <h3 class="mt-8 text-[clamp(24px,2.4vw,30px)] font-semibold leading-[1.05] tracking-[-0.04em]">
-            {project.title}
-          </h3>
+          <div class="flex flex-1 flex-col p-6 md:p-7">
+            <div class="flex items-center justify-between gap-4">
+              <span class="mono text-[11px] text-ink-3">
+                {project.index} / {project.year}
+              </span>
+              <span class={`pill ${statusClass(project.status)}`}>
+                {isInProgress(project.status) && <span class="dot"></span>}
+                {project.status}
+              </span>
+            </div>
 
-          <p class="mt-3 max-w-[500px] flex-1 text-[14.5px] leading-[1.6] text-ink-2">
-            {project.description}
-          </p>
+            <h3 class="mt-5 text-[clamp(24px,2.4vw,30px)] font-semibold leading-[1.05] tracking-[-0.04em]">
+              {project.title}
+            </h3>
 
-          <div class="mt-6 flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <span class="pill">{tag}</span>
-            ))}
+            <p class="mt-3 max-w-[520px] flex-1 text-[14.5px] leading-[1.6] text-ink-2">
+              {project.description}
+            </p>
+
+            <div class="mt-5 flex flex-wrap gap-1.5">
+              {project.tags.map((tag) => (
+                <span class="pill">{tag}</span>
+              ))}
+            </div>
+
+            <div class="mt-6 flex items-start justify-between gap-3 border-t border-line pt-4">
+              <details class="project-details min-w-0 flex-1">
+                <summary class="flex w-fit cursor-pointer list-none items-center gap-1.5 text-[13px] font-semibold text-ink transition-colors hover:text-accent">
+                  <span class="expand-label">Expand</span>
+                  <span class="collapse-label">Collapse</span>
+                  <Icon
+                    name="arrow-down"
+                    size={14}
+                    class="details-chevron transition-transform duration-200"
+                  />
+                </summary>
+
+                <p class="mono mt-4 text-[9.5px] uppercase tracking-[0.08em] text-ink-3">
+                  Tech stack
+                </p>
+                <dl class="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-line pt-4">
+                  {project.stack.map((item) => (
+                    <div>
+                      <dt class="mono text-[9.5px] uppercase tracking-[0.08em] text-ink-3">
+                        {item.label}
+                      </dt>
+                      <dd class="mt-1 text-[12.5px] leading-[1.4] text-ink-2">{item.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </details>
+
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.title} on GitHub`}
+                title="View on GitHub"
+                class="grid h-9 w-9 flex-none place-items-center rounded-md text-ink-2 shadow-[inset_0_0_0_1px_var(--color-line-2)] transition-colors hover:bg-accent hover:text-accent-ink hover:shadow-none"
+              >
+                <Social icon="github" size={15} />
+              </a>
+            </div>
           </div>
-
-          <div class="mt-7 flex items-center justify-between border-t border-line pt-4">
-            <span class="text-[13.5px] font-semibold text-ink transition-colors group-hover:text-accent">
-              View case study
-            </span>
-            <span class="grid h-8 w-8 place-items-center rounded-full text-ink-2 shadow-[inset_0_0_0_1px_var(--color-line-2)] transition-all group-hover:bg-accent group-hover:text-accent-ink group-hover:shadow-none">
-              <Icon name="arrow-up-right" size={15} />
-            </span>
-          </div>
-        </a>
+        </article>
       ))
     }
   </div>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a0a"/>
+      <stop offset="1" stop-color="#101a14"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="80%" cy="20%" r="60%">
+      <stop offset="0" stop-color="#7cffb2" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#7cffb2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#8a8a93" letter-spacing="1.5">
+    <text x="80" y="86">PROJECT / 01</text>
+    <text x="1120" y="86" text-anchor="end">2025</text>
+  </g>
+  <line x1="80" y1="112" x2="1120" y2="112" stroke="rgba(255,255,255,0.12)"/>
+
+  <g transform="translate(680 150)">
+    <rect width="420" height="260" rx="16" fill="#111113" stroke="rgba(255,255,255,0.12)"/>
+    <circle cx="24" cy="24" r="4" fill="#3a3a3f"/>
+    <circle cx="40" cy="24" r="4" fill="#3a3a3f"/>
+    <circle cx="56" cy="24" r="4" fill="#7cffb2"/>
+    <line x1="0" y1="48" x2="420" y2="48" stroke="rgba(255,255,255,0.08)"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">
+      <text x="24" y="86" fill="#8a8a93">$ go run main.go</text>
+      <text x="24" y="118" fill="#7cffb2">server listening :8080</text>
+      <text x="24" y="150" fill="#8a8a93">$ gh workflow run deploy.yml</text>
+      <text x="24" y="182" fill="#d7dbe0">build</text>
+      <text x="70" y="182" fill="#7cffb2">passed</text>
+      <text x="24" y="214" fill="#d7dbe0">deploy</text>
+      <text x="70" y="214" fill="#7cffb2">passed</text>
+    </g>
+    <rect x="24" y="234" width="120" height="4" rx="2" fill="#7cffb2"/>
+    <rect x="152" y="234" width="40" height="4" rx="2" fill="rgba(255,255,255,0.12)"/>
+  </g>
+
+  <rect x="80" y="500" width="56" height="4" rx="2" fill="#7cffb2"/>
+  <text x="80" y="584" font-family="Inter Tight, Inter, ui-sans-serif, sans-serif" font-weight="600" font-size="76" letter-spacing="-4" fill="#f5f5f5">Deploy Golang</text>
+  <text x="82" y="622" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#8a8a93">GO 1.23 · NET/HTTP · GITHUB ACTIONS</text>
+</svg>

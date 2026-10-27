@@ -28,6 +28,7 @@ const jsonLd = {
   description: profile.seo.description,
   url: profile.seo.site,
   email: profile.contact.email,
+  image: profile.avatar ? new URL(profile.avatar, site).href : undefined,
   address: {
     "@type": "PostalAddress",
     addressLocality: profile.location,

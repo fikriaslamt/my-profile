@@ -1,0 +1,73 @@
+---
+import { Braces, Cloud } from "@lucide/astro";
+import {
+  siGo,
+  siJavascript,
+  siPhp,
+  siPostgresql,
+  siMysql,
+  siGin,
+  siCodeigniter,
+  siDocker,
+  siLinux,
+  siGit,
+  siElasticsearch,
+  siKibana,
+  siMinio,
+  siYii,
+  siGrafana,
+  siPostman,
+  siNodedotjs,
+} from "simple-icons";
+
+const brands: Record<string, { path: string; hex: string }> = {
+  go: siGo,
+  javascript: siJavascript,
+  php: siPhp,
+  postgresql: siPostgresql,
+  mysql: siMysql,
+  gin: siGin,
+  codeigniter: siCodeigniter,
+  docker: siDocker,
+  linux: siLinux,
+  git: siGit,
+  elasticsearch: siElasticsearch,
+  kibana: siKibana,
+  minio: siMinio,
+  yii: siYii,
+  grafana: siGrafana,
+  postman: siPostman,
+  nodejs: siNodedotjs,
+};
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 13, class: className = "" } = Astro.props;
+const brand = brands[name];
+
+const chipStyle = brand
+  ? `color: #${brand.hex}; color: color-mix(in oklab, #${brand.hex} 72%, var(--text)); background: color-mix(in oklab, #${brand.hex} 14%, transparent);`
+  : "color: var(--accent); background: var(--accent-soft);";
+---
+
+<span
+  class={`grid h-[22px] w-[22px] flex-none place-items-center rounded-[4px] ${className}`}
+  style={chipStyle}
+  aria-hidden="true"
+>
+  {
+    brand ? (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+        <path d={brand.path} />
+      </svg>
+    ) : name === "cloud" ? (
+      <Cloud size={size} />
+    ) : (
+      <Braces size={size} />
+    )
+  }
+</span>

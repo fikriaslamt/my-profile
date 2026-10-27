@@ -9,14 +9,9 @@
 export type NavItem = { label: string; href: string };
 
 export type Pillar = {
-  index: string;
   label: string;
   title: string;
   description: string;
-  icon: "layers" | "code";
-  bullets: string[];
-  href: string;
-  cta: string;
 };
 
 export type Step = {
@@ -25,10 +20,9 @@ export type Step = {
   description: string;
 };
 
-export type FlowNode = {
+export type ProjectStack = {
   label: string;
-  title: string;
-  note: string;
+  value: string;
 };
 
 export type Project = {
@@ -39,6 +33,8 @@ export type Project = {
   year: string;
   status: "Shipped" | "In progress" | "Archived";
   href: string;
+  image: string;
+  stack: ProjectStack[];
 };
 
 export type Stat = {
@@ -63,47 +59,62 @@ export type Social = {
 
 export const profile = {
   /* ── Identity ───────────────────────────────────────────── */
-  name: "Your Name", // TODO
-  wordmark: "yourname", // TODO: shown in the navbar
-  initials: "YN", // TODO: avatar initials
-  role: "Product Engineer", // TODO
-  location: "Jakarta, Indonesia", // TODO
-  availability: "Open for select work", // TODO
+  name: "Fikri Aslam Taufiqurrahman",
+  wordmark: "fikriaslam",
+  initials: "FA",
+  avatar: "/profile-picture.jpeg",
+  role: "Software Engineer",
+  location: "Pringsewu, Lampung, Indonesia",
+  availability: "Open to backend roles",
   timezone: "GMT+7",
 
   /* ── Hero ───────────────────────────────────────────────── */
   headline: {
-    before: "I design and build ",
-    highlight: "products", // rendered with a white marker highlight
-    after: " that feel inevitable.",
+    before: "I build ",
+    highlight: "backends",
+    after: " that stay boring.",
   },
   lede:
-    "I work in the space between a rough idea and a shipped interface. Focused on clarity, speed, and the small details that make software feel considered.",
+    "Backend-focused software engineer working with Go, JavaScript, and PHP. I care about clean APIs, reliable data, and the quiet infrastructure that keeps a product running.",
   tagline: "", // optional: leave empty to build "role · location · availability"
   heroCard: {
     kicker: "PROFILE / 01",
-    label: "Independent practice",
+    label: "Backend · Cloud",
     facts: [
-      { value: "7 yrs", label: "Building" },
-      { value: "40+", label: "Projects" },
-      { value: "<24h", label: "Reply" },
+      { value: "7 yrs", label: "On GitHub" },
+      { value: "34", label: "Public repos" },
+      { value: "3", label: "Languages" },
     ],
   },
   ctas: {
     primary: { label: "View projects", href: "#work" },
     secondary: { label: "Contact me", href: "#contact" },
   },
+  cv: {
+    label: "Download CV",
+    href: "/cv/fikri-aslam-cv.pdf",
+    filename: "Fikri-Aslam-CV.pdf",
+  },
   marquee: [
-    "TypeScript",
-    "Astro",
-    "React",
-    "Design systems",
-    "Tailwind CSS",
-    "Node.js",
-    "Postgres",
-    "Accessibility",
-    "Prototyping",
-    "Figma",
+    { label: "Go", icon: "go" },
+    { label: "JavaScript", icon: "javascript" },
+    { label: "PHP", icon: "php" },
+    { label: "Node.js", icon: "nodejs" },
+    { label: "REST APIs", icon: "rest" },
+    { label: "PostgreSQL", icon: "postgresql" },
+    { label: "MySQL", icon: "mysql" },
+    { label: "Elasticsearch", icon: "elasticsearch" },
+    { label: "MinIO", icon: "minio" },
+    { label: "Gin", icon: "gin" },
+    { label: "CodeIgniter 4", icon: "codeigniter" },
+    { label: "Yii", icon: "yii" },
+    { label: "Docker", icon: "docker" },
+    { label: "Linux", icon: "linux" },
+    { label: "Git", icon: "git" },
+    { label: "Grafana", icon: "grafana" },
+    { label: "Kibana", icon: "kibana" },
+    { label: "Postman", icon: "postman" },
+    { label: "Cloud", icon: "cloud" },
   ],
 
   /* ── Navigation ─────────────────────────────────────────── */
@@ -117,34 +128,16 @@ export const profile = {
   /* ── Two pillars ("What I do") ──────────────────────────── */
   pillars: [
     {
-      index: "01",
-      label: "PRODUCT",
-      title: "Shape the thing worth building",
+      label: "BACKEND",
+      title: "APIs and data that stay honest",
       description:
-        "From a half-formed brief to a sharp product direction. I help teams decide what to make, what to cut, and how it should feel.",
-      icon: "layers",
-      bullets: [
-        "Discovery and problem framing",
-        "Interface systems that scale",
-        "Prototypes that answer real questions",
-      ],
-      href: "#work",
-      cta: "See product work",
+        "I build backend services that are predictable to call, easy to test, and straightforward to maintain as the product grows.",
     },
     {
-      index: "02",
-      label: "ENGINEERING",
-      title: "Ship it, then make it fast",
+      label: "CLOUD & DELIVERY",
+      title: "Ship it, then keep it running",
       description:
-        "Production frontends built to be maintained. Type-safe, accessible, and tuned until the interaction disappears.",
-      icon: "code",
-      bullets: [
-        "Type-safe frontends with Astro and React",
-        "Design-system driven UI",
-        "Performance and accessibility budgets",
-      ],
-      href: "#stack",
-      cta: "See the stack",
+        "Deployment is part of the feature. I work on service packaging, delivery workflows, and the observability that makes production behavior visible.",
     },
   ] satisfies Pillar[],
 
@@ -152,91 +145,103 @@ export const profile = {
   process: [
     {
       index: "01",
-      title: "Listen",
-      description:
-        "Start with the constraint, not the solution. I map the problem, the users, and the thing that actually hurts.",
+      title: "Understand",
+      description: "Start with the use case, constraints, and failure modes.",
     },
     {
       index: "02",
-      title: "Frame",
-      description:
-        "Turn findings into a point of view: one clear direction, a small surface area, and trade-offs written down.",
+      title: "Model",
+      description: "Sketch the API contract and schema before code.",
     },
     {
       index: "03",
       title: "Build",
-      description:
-        "Ship the thinnest real version. Tight loops, real content, and decisions made in the browser instead of a deck.",
+      description: "Ship the smallest working slice with tests.",
     },
     {
       index: "04",
-      title: "Sharpen",
-      description:
-        "Measure, remove friction, and polish the details that make people trust the thing they are using.",
+      title: "Harden",
+      description: "Add logs, deploy, and watch real behavior.",
     },
   ] satisfies Step[],
 
-  /* ── Flow diagram ───────────────────────────────────────── */
-  flow: {
-    kicker: "THE PATH",
-    title: "One loop, four moves",
-    lede:
-      "A project is not a straight line, but the shape is predictable. Each pass through the loop leaves less guesswork behind.",
-    caption:
-      "Every step produces an artifact you can react to — a note, a screen, a build, a metric.",
-    nodes: [
-      { label: "INPUT", title: "Signal", note: "Interviews · data" },
-      { label: "SHAPE", title: "Frame", note: "Scope · direction" },
-      { label: "MAKE", title: "Build", note: "Interface · code" },
-      { label: "LEARN", title: "Ship", note: "Measure · refine" },
-    ] satisfies FlowNode[],
-  },
-
   /* ── Projects ───────────────────────────────────────────── */
   projectsKicker: "SELECTED WORK",
-  projectsTitle: "Things I have shipped",
+  projectsTitle: "Backend systems I've built",
   projectsLede:
-    "A small selection of product and interface work. Replace these placeholders with your own case studies.",
+    "Public repositories from my work and study. Each one starts with a real problem: an API, a data model, or a deployment path.",
   projects: [
     {
       index: "01",
-      title: "Northwind",
+      title: "Deploy Golang",
       description:
-        "A calm operations dashboard for messy real-world data. Fewer charts, better questions, faster decisions.",
-      tags: ["Product design", "Next.js", "TypeScript"],
-      year: "2026",
+        "A deployment-focused Go service built with the standard library and shipped with a GitHub Actions workflow.",
+      tags: ["Go", "net/http", "GitHub Actions"],
+      year: "2025",
       status: "Shipped",
-      href: "#",
+      href: "https://github.com/fikriaslamt/deploy-golang",
+      image: "/projects/deploy-golang.svg",
+      stack: [
+        { label: "Language", value: "Go 1.23" },
+        { label: "HTTP", value: "net/http" },
+        { label: "CI/CD", value: "GitHub Actions" },
+        { label: "Focus", value: "Deployment" },
+      ],
     },
     {
       index: "02",
-      title: "Ledger",
+      title: "SI TPST Unila",
       description:
-        "A component and token system that let a small team ship consistent UI across four products without a design police.",
-      tags: ["Design system", "Astro", "Tailwind"],
-      year: "2025",
+        "Web-based information system for the integrated waste processing facility at Universitas Lampung. Built as my undergraduate thesis.",
+      tags: ["CodeIgniter 4", "PHP", "Tailwind CSS"],
+      year: "2024",
       status: "Shipped",
-      href: "#",
+      href: "https://github.com/fikriaslamt/si-tpst",
+      image: "/projects/si-tpst.svg",
+      stack: [
+        { label: "Language", value: "PHP 8 · JavaScript" },
+        { label: "Framework", value: "CodeIgniter 4" },
+        { label: "Styling", value: "Tailwind CSS" },
+        { label: "Build", value: "Laravel Mix" },
+        { label: "Data", value: "MySQL" },
+        { label: "Context", value: "Undergraduate thesis" },
+      ],
     },
     {
       index: "03",
-      title: "Relay",
+      title: "Book API",
       description:
-        "Realtime handoff tool for distributed teams. Presence, comments, and state that never needs a refresh.",
-      tags: ["Realtime", "WebSocket", "React"],
-      year: "2025",
-      status: "In progress",
-      href: "#",
+        "REST API for managing books, built with Gin, GORM, and PostgreSQL, including JWT auth and layered handlers.",
+      tags: ["Go", "Gin", "PostgreSQL"],
+      year: "2023",
+      status: "Shipped",
+      href: "https://github.com/fikriaslamt/book-api",
+      image: "/projects/book-api.svg",
+      stack: [
+        { label: "Language", value: "Go 1.19" },
+        { label: "Framework", value: "Gin" },
+        { label: "ORM", value: "GORM" },
+        { label: "Database", value: "PostgreSQL" },
+        { label: "Auth", value: "JWT" },
+      ],
     },
     {
       index: "04",
-      title: "Field Notes",
+      title: "Kanban App",
       description:
-        "An editorial home for long-form writing. Quiet typography, fast pages, and motion that stays out of the way.",
-      tags: ["Editorial", "CMS", "Motion"],
-      year: "2024",
+        "Kanban backend with boards, lists, and tasks, backed by PostgreSQL and shipped with Docker and Fly.io.",
+      tags: ["Go", "GORM", "PostgreSQL", "Docker"],
+      year: "2022",
       status: "Shipped",
-      href: "#",
+      href: "https://github.com/fikriaslamt/kanban-app",
+      image: "/projects/kanban-app.svg",
+      stack: [
+        { label: "Language", value: "Go 1.16" },
+        { label: "ORM", value: "GORM" },
+        { label: "Database", value: "PostgreSQL" },
+        { label: "Runtime", value: "Docker · Fly.io" },
+        { label: "Tests", value: "Ginkgo" },
+      ],
     },
   ] satisfies Project[],
 
@@ -245,74 +250,74 @@ export const profile = {
     kicker: "THE TOOLKIT",
     title: "Tools I reach for",
     lede:
-      "Boring where it counts, sharp where it matters. This is the working set — it changes as the problem does.",
+      "The working set I use to build and ship backend services. It follows the problem, not the other way around.",
     filename: "profile.json",
-    focus: ["product", "frontend", "design systems"],
+    focus: ["backend", "apis", "cloud"],
     groups: {
-      languages: ["TypeScript", "JavaScript", "SQL"],
-      frontend: ["Astro", "React", "Tailwind CSS"],
-      backend: ["Node.js", "Postgres", "Edge functions"],
-      tooling: ["Vite", "Playwright", "Figma"],
+      languages: ["Go", "JavaScript", "PHP"],
+      backend: ["REST APIs", "Gin", "CodeIgniter 4", "Yii", "Node.js"],
+      data: ["PostgreSQL", "MySQL", "Elasticsearch", "MinIO"],
+      tooling: ["Docker", "Git", "Linux", "Fly.io", "Grafana", "Kibana", "Postman"],
     },
-    currently: "Building small, sharp tools for the web.",
+    currently: "Building backend services and learning in public.",
     principles: [
       {
-        title: "Interfaces over artifacts",
-        note: "Decisions get made in the browser, not in a deck.",
+        title: "Model the data first",
+        note: "Schemas outlive frameworks. Get the relationships right before the handlers.",
       },
       {
-        title: "Accessible by default",
-        note: "Keyboard paths, contrast, and semantics are part of the build.",
+        title: "Make failures visible",
+        note: "Logs, clear errors, and health checks are part of the feature.",
       },
       {
-        title: "Fast is a feature",
-        note: "Ship less JavaScript and let the platform do the work.",
+        title: "Boring is a feature",
+        note: "Simple systems are easier to operate, debug, and hand over.",
       },
     ],
   },
 
   /* ── Stats ──────────────────────────────────────────────── */
   stats: [
-    { value: 7, suffix: "+", label: "Years building" },
-    { value: 40, suffix: "+", label: "Projects shipped" },
-    { value: 12, suffix: "", label: "Teams partnered" },
-    { value: 99, suffix: "", label: "Avg. Lighthouse" },
+    { value: 7, suffix: "+", label: "Years on GitHub" },
+    { value: 34, suffix: "", label: "Public repositories" },
+    { value: 3, suffix: "", label: "Core languages" },
+    { value: 2, suffix: "", label: "Focus areas" },
   ] satisfies Stat[],
 
   /* ── Experience ─────────────────────────────────────────── */
   aboutKicker: "EXPERIENCE",
   aboutTitle: "A short history",
   aboutLede:
-    "Independent by choice, collaborative by default. I have worked across early-stage products, studios, and in-house teams.",
+    "Backend engineer with a degree from Universitas Lampung, a thesis in web information systems, and a habit of learning by shipping.",
   experience: [
     {
-      period: "2024 — Now",
-      role: "Product Engineer",
-      company: "Independent",
+      period: "Now",
+      role: "Software Engineer",
+      company: "CODE.ID",
       description:
-        "Partnering with small teams to take products from prototype to launch. Design, frontend, and the glue in between.",
+        "Building backend services and web applications with Go, JavaScript, and PHP, with a focus on APIs, data, and cloud delivery.",
       current: true,
     },
     {
-      period: "2021 — 2024",
-      role: "Senior Frontend Engineer",
-      company: "Studio North",
+      period: "2024",
+      role: "Thesis · Web Information System",
+      company: "Universitas Lampung",
       description:
-        "Led the frontend for a multi-product platform and built the design system that kept it coherent.",
+        "Designed and built SI TPST Unila, a web-based information system for the university's integrated waste processing facility.",
     },
     {
-      period: "2019 — 2021",
-      role: "Frontend Engineer",
-      company: "Ledger Labs",
+      period: "Program",
+      role: "Backend Development",
+      company: "Digital Talent Scholarship",
       description:
-        "Shipped data-heavy interfaces for finance teams. Learned to make dense information feel quiet.",
+        "Participated in a digital talent program focused on backend development and practical software engineering.",
     },
     {
-      period: "2017 — 2019",
-      role: "Designer & Developer",
-      company: "Freelance",
+      period: "Education",
+      role: "Undergraduate · FMIPA",
+      company: "Universitas Lampung",
       description:
-        "Websites, identities, and the occasional small application. The years that taught me to finish things.",
+        "Studied at the Faculty of Mathematics and Natural Sciences, with a thesis on a web-based information system for TPST Unila (2024).",
     },
   ] satisfies Experience[],
 
@@ -321,25 +326,24 @@ export const profile = {
     kicker: "CONTACT",
     title: {
       before: "Let's build something ",
-      highlight: "worth shipping",
+      highlight: "reliable",
       after: ".",
     },
     lede:
-      "I take on a small number of projects at a time. If you have a product that needs shape, or a team that needs momentum, tell me about it.",
-    email: "hello@your-domain.com", // TODO
-    emailLabel: "hello@your-domain.com",
-    note: "Usually replies within a day. Based in Jakarta, working across time zones.",
+      "I'm open to backend engineering roles and freelance work involving APIs, data, and cloud delivery. If you have a system that needs building or fixing, tell me about it.",
+    email: "fikriaslam.t@gmail.com",
+    emailLabel: "fikriaslam.t@gmail.com",
+    note: "Based in Pringsewu, Lampung. Usually replies within a day.",
     socials: [
-      { label: "GitHub", href: "https://github.com/your-handle", icon: "github" },
-      { label: "LinkedIn", href: "https://linkedin.com/in/your-handle", icon: "linkedin" },
-      { label: "X", href: "https://x.com/your-handle", icon: "x" },
-      { label: "Email", href: "mailto:hello@your-domain.com", icon: "mail" },
+      { label: "GitHub", href: "https://github.com/fikriaslamt", icon: "github" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/fikri-aslam/", icon: "linkedin" },
+      { label: "Email", href: "mailto:fikriaslam.t@gmail.com", icon: "mail" },
     ] satisfies Social[],
   },
 
   /* ── Footer ─────────────────────────────────────────────── */
   footer: {
-    note: "Designing and building sharp interfaces for the web.",
+    note: "Backend engineering, APIs, and cloud delivery.",
     columns: [
       {
         title: "Navigate",
@@ -353,10 +357,9 @@ export const profile = {
       {
         title: "Elsewhere",
         links: [
-          { label: "GitHub", href: "https://github.com/your-handle" },
-          { label: "LinkedIn", href: "https://linkedin.com/in/your-handle" },
-          { label: "X", href: "https://x.com/your-handle" },
-          { label: "Email", href: "mailto:hello@your-domain.com" },
+          { label: "GitHub", href: "https://github.com/fikriaslamt" },
+          { label: "LinkedIn", href: "https://www.linkedin.com/in/fikri-aslam/" },
+          { label: "Email", href: "mailto:fikriaslam.t@gmail.com" },
         ],
       },
     ],
@@ -364,9 +367,9 @@ export const profile = {
 
   /* ── SEO ────────────────────────────────────────────────── */
   seo: {
-    title: "Your Name — Product Engineer",
+    title: "Fikri Aslam — Software Engineer",
     description:
-      "Personal profile of Your Name, a product engineer designing and building sharp interfaces for the web.",
+      "Fikri Aslam Taufiqurrahman is a backend-focused software engineer in Lampung, Indonesia, building APIs and data-driven services with Go, JavaScript, and PHP.",
     site: "https://fikriaslam.my.id", // TODO: keep in sync with astro.config.mjs
     ogImage: "/og.png",
   },
