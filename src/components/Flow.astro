@@ -22,8 +22,8 @@ const lastCenter = positions[positions.length - 1].center;
 
   <div class="reveal mt-12">
     <div
-      class="rounded-[24px] p-2 shadow-[inset_0_0_0_1px_var(--color-line-2),0_60px_120px_-40px_rgba(0,0,0,0.9),0_0_0_8px_rgba(255,255,255,0.02)] md:p-4"
-      style="background: linear-gradient(180deg, #121212, #0c0c0c)"
+      class="rounded-[24px] p-2 shadow-[var(--shadow-stage)] md:p-4"
+      style="background: linear-gradient(180deg, var(--surface), var(--surface-2))"
     >
       <div class="flex items-center justify-between gap-3 px-3 py-3">
         <div class="flex items-center gap-1.5" aria-hidden="true">
@@ -114,8 +114,8 @@ const lastCenter = positions[positions.length - 1].center;
                     width={nodeWidth}
                     height={nodeHeight}
                     rx="16"
-                    fill={isHot ? "rgba(124,255,178,0.06)" : "#0d0d0d"}
-                    stroke={isHot ? "rgba(124,255,178,0.55)" : "var(--color-line-2)"}
+                    fill={isHot ? "var(--accent-soft)" : "var(--surface)"}
+                    stroke={isHot ? "var(--accent)" : "var(--color-line-2)"}
                   />
 
                   <text

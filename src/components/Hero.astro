@@ -70,7 +70,7 @@ const tagline =
           </div>
 
           <div
-            class="ticket-glow relative rounded-[24px] p-6 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.14),0_60px_90px_-40px_rgba(0,0,0,0.95),0_0_90px_-30px_rgba(124,255,178,0.35)]"
+            class="ticket-glow relative rounded-[24px] p-6 shadow-[var(--shadow-ticket)]"
           >
             <div class="flex items-center justify-between gap-3">
               <span class="kick">{profile.heroCard.kicker}</span>
@@ -82,7 +82,7 @@ const tagline =
 
             <div class="mt-7 flex items-center gap-3.5">
               <div
-                class="grid h-[52px] w-[52px] flex-none place-items-center rounded-full bg-gradient-to-br from-accent to-white text-[13px] font-bold tracking-[-0.03em] text-paper shadow-[inset_0_0_0_1px_rgba(255,255,255,0.25)]"
+                class="grid h-[52px] w-[52px] flex-none place-items-center rounded-full bg-accent text-[13px] font-bold tracking-[-0.03em] text-accent-ink shadow-[inset_0_0_0_1px_var(--border-strong)]"
               >
                 {profile.initials}
               </div>

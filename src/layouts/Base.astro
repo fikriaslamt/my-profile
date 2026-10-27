@@ -50,8 +50,35 @@ const jsonLdSafe = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" id="theme-color" content="#0a0a0a" />
+    <meta name="color-scheme" content="light dark" />
+
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add("js", "theme-loading");
+
+        let mode = "system";
+        try {
+          const saved = localStorage.getItem("theme");
+          if (saved === "light" || saved === "dark" || saved === "system") mode = saved;
+        } catch {
+          /* storage unavailable — follow the OS */
+        }
+
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const resolved = mode === "system" ? (prefersDark ? "dark" : "light") : mode;
+
+        root.dataset.theme = resolved;
+        root.dataset.themeMode = mode;
+        root.style.colorScheme = resolved;
+
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute("content", resolved === "dark" ? "#0a0a0a" : "#ffffff");
+        }
+      })();
+    </script>
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
@@ -82,10 +109,6 @@ const jsonLdSafe = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-
-    <script is:inline>
-      document.documentElement.classList.add("js");
-    </script>
 
     <script type="application/ld+json" set:html={jsonLdSafe} />
 
@@ -215,6 +238,14 @@ const jsonLdSafe = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
           });
         });
       })();
+    </script>
+
+    <script is:inline>
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.documentElement.classList.remove("theme-loading");
+        });
+      });
     </script>
   </body>
 </html>

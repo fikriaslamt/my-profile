@@ -17,7 +17,10 @@ Build and preview:
 npm run build      # static output in dist/
 npm run preview
 npm run check      # Astro + TypeScript diagnostics
+npm run test:e2e   # Playwright theme tests
 ```
+
+The Playwright config uses `channel: "chrome"` so it runs with your installed browser. On CI without Chrome, run `npx playwright install chromium` and remove that channel line.
 
 Requires Node.js 22+ (tested on Node 25).
 
@@ -49,23 +52,39 @@ Things worth knowing:
 - **Social icons** support `github`, `linkedin`, `x`, and `mail`.
 - **Stack JSON** in the code block is generated from `profile.stack`, so editing the data updates the snippet automatically.
 
-## Change the theme
+## Theme: light, dark, system
 
-Design tokens live in [`src/styles/global.css`](src/styles/global.css) under `@theme`:
+The navbar switch (monitor / sun / moon icon) opens a small menu with **System**, **Light**, and **Dark**. System is the default and follows the OS live. An explicit choice is saved in `localStorage` under `theme` and synced across tabs. Storage access is wrapped in `try/catch` and falls back to System.
+
+Theme is applied as `data-theme="light|dark"` plus `color-scheme` on `<html>`. A blocking inline script in [`Base.astro`](src/layouts/Base.astro) resolves the theme before first paint, so there is no flash. With JavaScript disabled, `@media (prefers-color-scheme: dark)` supplies the dark tokens.
+
+All colors are CSS variables in [`src/styles/global.css`](src/styles/global.css):
 
 ```css
---color-paper: #0a0a0a;
---color-card: #121212;
---color-ink: #f5f5f5;
---color-ink-2: #a3a3a3;
---color-ink-3: #8a8a8a;
---color-line: rgba(255, 255, 255, 0.08);
---color-accent: #7cffb2;
---font-display: "Inter Tight", ...;
---font-mono: "Geist Mono", ...;
+:root {
+  --bg: #ffffff;
+  --surface: #f6f6f7;
+  --surface-2: #eeeef0;
+  --border: rgba(0, 0, 0, 0.1);
+  --text: #0f0f10;
+  --muted: #5f5f68;
+  --accent: #086b3c;
+}
+
+[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --surface: #111113;
+  --surface-2: #16161a;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #ededed;
+  --muted: #a3a3a3;
+  --accent: #7cffb2;
+}
 ```
 
-Swap `--color-accent` to re-skin every CTA, link, marker, and highlight. Amber (`#ffb84d`), violet (`#8b7bff`), or blue (`#5b8cff`) all work with the neutral base. If you change the accent, also update the inline color in the success pill and the hard-coded accents in `src/lib/og.ts` for consistency.
+Tailwind maps these with `@theme inline` (`bg-paper`, `text-ink`, `border-line`, `text-accent`, etc.), so editing the variables rethemes every component. `dark:` utilities are wired to `[data-theme="dark"]` via `@custom-variant dark`. The `<meta name="theme-color">` updates to `#ffffff` or `#0a0a0a`.
+
+If you change the accent, also update the accent values in [`src/lib/og.ts`](src/lib/og.ts) — the OG artwork intentionally stays dark.
 
 Fonts are **self-hosted** in [`public/fonts/`](public/fonts) with `@font-face` declarations in [`src/styles/fonts.css`](src/styles/fonts.css). There are no third-party font requests. Inter Tight and Geist Mono are licensed under the SIL Open Font License 1.1. The two latin files are preloaded in the document head.
 
@@ -116,6 +135,7 @@ src/
     Contact.astro
     Footer.astro
     SectionHead.astro
+    ThemeToggle.astro
     Icon.astro
     Social.astro
   lib/og.ts              ← shared OG SVG builder
@@ -124,17 +144,22 @@ src/
     og.svg.ts
     og.png.ts
     robots.txt.ts
-  styles/global.css      ← tokens and custom utilities
-docs/DESIGN.md           ← design rationale and tokens
+  styles/global.css      ← light/dark tokens and utilities
+docs/DESIGN.md           ← design rationale, tokens, theming
+tests/theme.spec.ts      ← Playwright theme coverage
+playwright.config.ts
+CHANGELOG.md
 ```
 
 ## Quality notes
 
-- Lighthouse (production build, mobile): **Performance 100 · Accessibility 100 · Best Practices 100 · SEO 100**
+- Lighthouse baseline (production preview, mobile): **Performance 100 · Accessibility 100 · Best Practices 100 · SEO 100**
+- Theme switcher covered by 5 Playwright tests: OS light, OS dark, live system changes, persistence, and keyboard navigation.
+- Light and dark palettes both meet WCAG AA for text, muted text, links, buttons, and focus rings.
+- Blocking head script prevents a flash of the wrong theme; JS-disabled browsers fall back to `prefers-color-scheme`.
 - Semantic landmarks, one `h1`, visible focus rings, skip link, and labelled controls.
-- `prefers-reduced-motion` disables reveals, counters, marquee, and dashed flow animation.
+- `prefers-reduced-motion` disables reveals, counters, marquee, dashed flow animation, and the theme icon transition.
 - Responsive from 360px to 1440px; verified no horizontal overflow at 390px.
-- Dark-only by design. No light mode is included; the `color-scheme` meta is set to dark.
 - No images are used for page content, so there is nothing to lazy-load or optimize.
 
 ## Attribution

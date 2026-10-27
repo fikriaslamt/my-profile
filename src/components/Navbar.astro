@@ -1,6 +1,7 @@
 ---
 import { profile } from "../content/profile";
 import Icon from "./Icon.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <header
@@ -28,6 +29,8 @@ import Icon from "./Icon.astro";
     </nav>
 
     <div class="ml-auto flex items-center gap-2">
+      <ThemeToggle />
+
       <a href={profile.ctas.secondary.href} class="btn btn-primary btn-sm hidden md:inline-flex">
         {profile.ctas.secondary.label}
         <Icon name="arrow-up-right" size={14} />

@@ -1,0 +1,245 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div class="relative" data-theme-root>
+  <button
+    type="button"
+    data-theme-toggle
+    aria-haspopup="menu"
+    aria-controls="theme-menu"
+    aria-expanded="false"
+    aria-label="Change theme"
+    title="Theme: System"
+    class="grid h-10 w-10 place-items-center rounded-lg text-ink-2 shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:bg-card-2 hover:text-ink"
+  >
+    <span class="relative block h-[18px] w-[18px]" aria-hidden="true">
+      <span class="theme-icon" data-theme-icon="system">
+        <Icon name="monitor" size={18} />
+      </span>
+      <span class="theme-icon" data-theme-icon="light">
+        <Icon name="sun" size={18} />
+      </span>
+      <span class="theme-icon" data-theme-icon="dark">
+        <Icon name="moon" size={18} />
+      </span>
+    </span>
+  </button>
+
+  <div
+    id="theme-menu"
+    data-theme-menu
+    role="menu"
+    aria-label="Theme"
+    hidden
+    class="absolute right-0 top-full z-[70] mt-2 w-52 rounded-xl border border-line bg-card p-1.5 shadow-[var(--shadow-panel)]"
+  >
+    <button
+      type="button"
+      role="menuitemradio"
+      aria-checked="true"
+      data-theme-option="system"
+      tabindex="-1"
+      class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"
+    >
+      <Icon name="monitor" size={16} class="text-ink-3" />
+      <span class="flex-1">System</span>
+      <span data-theme-check class="text-accent">
+        <Icon name="check" size={15} />
+      </span>
+    </button>
+
+    <button
+      type="button"
+      role="menuitemradio"
+      aria-checked="false"
+      data-theme-option="light"
+      tabindex="-1"
+      class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"
+    >
+      <Icon name="sun" size={16} class="text-ink-3" />
+      <span class="flex-1">Light</span>
+      <span data-theme-check class="text-accent">
+        <Icon name="check" size={15} />
+      </span>
+    </button>
+
+    <button
+      type="button"
+      role="menuitemradio"
+      aria-checked="false"
+      data-theme-option="dark"
+      tabindex="-1"
+      class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"
+    >
+      <Icon name="moon" size={16} class="text-ink-3" />
+      <span class="flex-1">Dark</span>
+      <span data-theme-check class="text-accent">
+        <Icon name="check" size={15} />
+      </span>
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const themeRoot = document.querySelector("[data-theme-root]");
+    if (!themeRoot) return;
+
+    const toggle = themeRoot.querySelector("[data-theme-toggle]");
+    const menu = themeRoot.querySelector("[data-theme-menu]");
+    const options = Array.from(themeRoot.querySelectorAll("[data-theme-option]"));
+    if (!toggle || !menu) return;
+
+    const root = document.documentElement;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const STORAGE_KEY = "theme";
+    const MODES = ["system", "light", "dark"];
+    const LABELS = { system: "System", light: "Light", dark: "Dark" };
+    let transitionTimer;
+
+    const normalize = (value) => (MODES.includes(value) ? value : "system");
+
+    const read = () => {
+      try {
+        return normalize(localStorage.getItem(STORAGE_KEY));
+      } catch {
+        return "system";
+      }
+    };
+
+    const store = (mode) => {
+      try {
+        localStorage.setItem(STORAGE_KEY, mode);
+      } catch {
+        /* storage unavailable — the choice lasts for this page only */
+      }
+    };
+
+    const updateAria = (mode) => {
+      options.forEach((option) => {
+        option.setAttribute("aria-checked", String(option.dataset.themeOption === mode));
+      });
+
+      const label = LABELS[mode] ?? "System";
+      toggle.setAttribute("aria-label", `Change theme (current: ${label})`);
+      toggle.setAttribute("title", `Theme: ${label}`);
+    };
+
+    const apply = (mode, { persist = false, animate = true } = {}) => {
+      const nextMode = normalize(mode);
+      if (persist) store(nextMode);
+
+      if (animate && !reducedMotion.matches) {
+        root.classList.remove("theme-loading");
+        root.classList.add("theme-transition");
+        window.clearTimeout(transitionTimer);
+        transitionTimer = window.setTimeout(() => {
+          root.classList.remove("theme-transition");
+        }, 220);
+      }
+
+      const resolved =
+        nextMode === "system" ? (colorSchemeQuery.matches ? "dark" : "light") : nextMode;
+
+      root.dataset.theme = resolved;
+      root.dataset.themeMode = nextMode;
+      root.style.colorScheme = resolved;
+
+      if (meta) {
+        meta.setAttribute("content", resolved === "dark" ? "#0a0a0a" : "#ffffff");
+      }
+
+      updateAria(nextMode);
+    };
+
+    const items = () => Array.from(menu.querySelectorAll('[role="menuitemradio"]'));
+
+    const openMenu = (position) => {
+      menu.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+
+      const list = items();
+      const checkedIndex = list.findIndex(
+        (item) => item.getAttribute("aria-checked") === "true",
+      );
+      let index = checkedIndex >= 0 ? checkedIndex : 0;
+      if (position === "first") index = 0;
+      if (position === "last") index = list.length - 1;
+
+      window.requestAnimationFrame(() => list[index]?.focus());
+    };
+
+    const closeMenu = (focusToggle = true) => {
+      menu.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      if (focusToggle) toggle.focus();
+    };
+
+    toggle.addEventListener("click", () => {
+      if (menu.hidden) openMenu();
+      else closeMenu();
+    });
+
+    toggle.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        openMenu("first");
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        openMenu("last");
+      }
+    });
+
+    menu.addEventListener("keydown", (event) => {
+      const list = items();
+      const index = list.indexOf(document.activeElement);
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        list[(index + 1) % list.length]?.focus();
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        list[(index - 1 + list.length) % list.length]?.focus();
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        list[0]?.focus();
+      } else if (event.key === "End") {
+        event.preventDefault();
+        list[list.length - 1]?.focus();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+      } else if (event.key === "Tab") {
+        closeMenu(false);
+      }
+    });
+
+    options.forEach((option) => {
+      option.addEventListener("click", () => {
+        apply(option.dataset.themeOption, { persist: true, animate: true });
+        closeMenu();
+      });
+    });
+
+    document.addEventListener("pointerdown", (event) => {
+      if (!menu.hidden && !themeRoot.contains(event.target)) closeMenu(false);
+    });
+
+    window.addEventListener("storage", (event) => {
+      if (event.key === STORAGE_KEY || event.key === null) {
+        apply(read(), { persist: false, animate: true });
+      }
+    });
+
+    const onSchemeChange = () => {
+      if (read() === "system") apply("system", { persist: false, animate: true });
+    };
+
+    colorSchemeQuery.addEventListener("change", onSchemeChange);
+
+    apply(read(), { persist: false, animate: false });
+  })();
+</script>
