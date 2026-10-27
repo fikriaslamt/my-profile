@@ -1,0 +1,67 @@
+---
+import { profile } from "../content/profile";
+import Icon from "./Icon.astro";
+import Social from "./Social.astro";
+
+const contact = profile.contact;
+const mailto = `mailto:${contact.email}`;
+---
+
+<section id="contact" class="wrap pt-[120px] md:pt-[160px]">
+  <div
+    class="card reveal relative overflow-hidden rounded-[28px] px-6 py-12 md:px-12 md:py-16"
+  >
+    <div class="grid-bg pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
+    <div
+      class="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-accent/10 blur-[80px]"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="relative max-w-[900px]">
+      <p class="kick"><span class="dot"></span>{contact.kicker}</p>
+
+      <h2
+        class="mt-5 text-[clamp(40px,6vw,84px)] font-semibold leading-[0.98] tracking-[-0.055em]"
+      >
+        {contact.title.before}<span class="hl">{contact.title.highlight}</span>{contact.title.after}
+      </h2>
+
+      <p class="mt-6 max-w-[600px] text-[16.5px] leading-[1.6] text-ink-2 md:text-[17.5px]">
+        {contact.lede}
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center gap-2.5">
+        <a href={mailto} class="btn btn-primary h-12 px-6">
+          <Icon name="mail" size={16} />
+          {contact.emailLabel}
+          <Icon name="arrow-up-right" size={15} />
+        </a>
+        <button type="button" data-copy data-target="contact-email" class="btn btn-line h-12 px-5">
+          <Icon name="copy" size={15} />
+          <span data-copy-label>Copy email</span>
+        </button>
+      </div>
+
+      <p class="mono mt-6 text-[11px] leading-[1.6] text-ink-3">{contact.note}</p>
+
+      <div class="mt-8 flex flex-wrap gap-2">
+        {
+          contact.socials.map((social) => (
+            <a
+              href={social.href}
+              class="pill h-9 gap-2 px-3.5 text-[12px] text-ink-2 transition-colors hover:text-ink"
+              rel="noopener noreferrer"
+              target={social.href.startsWith("http") ? "_blank" : undefined}
+            >
+              <Social icon={social.icon} size={14} />
+              {social.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <span id="contact-email" class="sr-only">{contact.email}</span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+---
+import { profile } from "../content/profile";
+import SectionHead from "./SectionHead.astro";
+import Icon from "./Icon.astro";
+
+const statusClass = (status: string) =>
+  status === "Shipped" ? "pill-ok" : status === "In progress" ? "pill-acc" : "";
+---
+
+<section id="work" class="wrap pt-[110px] md:pt-[140px]">
+  <div class="flex flex-wrap items-end justify-between gap-6">
+    <SectionHead
+      kicker={profile.projectsKicker}
+      title={profile.projectsTitle}
+      lede={profile.projectsLede}
+    />
+    <p class="mono reveal hidden pb-2 text-[11.5px] text-ink-3 md:block">
+      {String(profile.projects.length).padStart(2, "0")} projects
+    </p>
+  </div>
+
+  <div class="mt-12 grid gap-4 md:grid-cols-2">
+    {
+      profile.projects.map((project, index) => (
+        <a
+          href={project.href}
+          class="card hover-lift reveal group flex flex-col p-7 md:p-8"
+          style={`--reveal-delay:${index * 80}ms`}
+        >
+          <div class="flex items-center justify-between gap-4">
+            <span class="mono text-[11px] text-ink-3">
+              {project.index} / {project.year}
+            </span>
+            <span class={`pill ${statusClass(project.status)}`}>
+              {project.status === "In progress" && <span class="dot"></span>}
+              {project.status}
+            </span>
+          </div>
+
+          <h3 class="mt-8 text-[clamp(24px,2.4vw,30px)] font-semibold leading-[1.05] tracking-[-0.04em]">
+            {project.title}
+          </h3>
+
+          <p class="mt-3 max-w-[500px] flex-1 text-[14.5px] leading-[1.6] text-ink-2">
+            {project.description}
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span class="pill">{tag}</span>
+            ))}
+          </div>
+
+          <div class="mt-7 flex items-center justify-between border-t border-line pt-4">
+            <span class="text-[13.5px] font-semibold text-ink transition-colors group-hover:text-accent">
+              View case study
+            </span>
+            <span class="grid h-8 w-8 place-items-center rounded-full text-ink-2 shadow-[inset_0_0_0_1px_var(--color-line-2)] transition-all group-hover:bg-accent group-hover:text-accent-ink group-hover:shadow-none">
+              <Icon name="arrow-up-right" size={15} />
+            </span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>

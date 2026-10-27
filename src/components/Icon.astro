@@ -1,0 +1,64 @@
+---
+import {
+  ArrowUpRight,
+  ArrowDown,
+  ArrowRight,
+  Copy,
+  Check,
+  Mail,
+  MapPin,
+  Sparkles,
+  Zap,
+  Menu,
+  X,
+  Terminal,
+  Rocket,
+  Boxes,
+  Palette,
+  Workflow,
+  Send,
+  Layers,
+  Code,
+  CircleDot,
+  Braces,
+  Globe,
+} from "@lucide/astro";
+
+const icons = {
+  "arrow-up-right": ArrowUpRight,
+  "arrow-down": ArrowDown,
+  "arrow-right": ArrowRight,
+  copy: Copy,
+  check: Check,
+  mail: Mail,
+  "map-pin": MapPin,
+  sparkles: Sparkles,
+  zap: Zap,
+  menu: Menu,
+  x: X,
+  terminal: Terminal,
+  rocket: Rocket,
+  boxes: Boxes,
+  palette: Palette,
+  workflow: Workflow,
+  send: Send,
+  layers: Layers,
+  code: Code,
+  "circle-dot": CircleDot,
+  braces: Braces,
+  globe: Globe,
+};
+
+interface Props {
+  name: keyof typeof icons;
+  size?: number;
+  strokeWidth?: number;
+  class?: string;
+}
+
+const { name, size = 16, strokeWidth = 1.75, class: className = "" } = Astro.props;
+
+const Icon = icons[name] ?? Sparkles;
+---
+
+<Icon size={size} stroke-width={strokeWidth} class={className} aria-hidden="true" />

@@ -1,0 +1,99 @@
+---
+import { profile } from "../content/profile";
+import SectionHead from "./SectionHead.astro";
+import Icon from "./Icon.astro";
+
+const stack = profile.stack;
+
+const data = {
+  name: profile.name,
+  role: profile.role,
+  location: profile.location,
+  focus: stack.focus,
+  stack: stack.groups,
+  currently: stack.currently,
+};
+
+const raw = JSON.stringify(data, null, 2);
+const escaped = raw.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const highlighted = escaped.replace(
+  /("(?:\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")(\s*:)?|\b(true|false|null)\b|-?\b\d+(?:\.\d+)?\b/g,
+  (match, str, colon) => {
+    if (str) {
+      const cls = colon ? "text-[#8ea9c9]" : "text-[#b9d8ff]";
+      return `<span class="${cls}">${str}</span>${colon ?? ""}`;
+    }
+    return `<span class="text-[#ffb547]">${match}</span>`;
+  },
+);
+---
+
+<section id="stack" class="wrap pt-[110px] md:pt-[140px]">
+  <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+    <div class="min-w-0 lg:sticky lg:top-28">
+      <SectionHead kicker={stack.kicker} title={stack.title} lede={stack.lede} />
+
+      <dl class="reveal mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[14px] bg-line">
+        <div class="bg-paper px-4 py-3.5">
+          <dt class="mono text-[10px] uppercase tracking-[0.08em] text-ink-3">Currently</dt>
+          <dd class="mt-1.5 text-[13.5px] leading-[1.45] text-ink-2">{stack.currently}</dd>
+        </div>
+        <div class="bg-paper px-4 py-3.5">
+          <dt class="mono text-[10px] uppercase tracking-[0.08em] text-ink-3">Focus</dt>
+          <dd class="mt-1.5 text-[13.5px] leading-[1.45] text-ink-2">
+            {stack.focus.join(", ")}
+          </dd>
+        </div>
+      </dl>
+
+      <ul class="reveal mt-8 border-t border-line" style="--reveal-delay:60ms">
+        {
+          stack.principles.map((principle, index) => (
+            <li class="grid grid-cols-[28px_minmax(0,1fr)] gap-3 border-b border-line py-4">
+              <span class="mono pt-0.5 text-[10.5px] text-accent">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <b class="text-[14px] font-semibold tracking-[-0.02em]">{principle.title}</b>
+                <p class="mt-1 text-[13px] leading-[1.5] text-ink-3">{principle.note}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="reveal min-w-0" style="--reveal-delay:100ms">
+      <div class="overflow-hidden rounded-[18px] bg-card shadow-[inset_0_0_0_1px_var(--color-line),0_40px_80px_-50px_rgba(0,0,0,0.9)]">
+        <div class="flex items-center gap-2 border-b border-line px-4 py-3">
+          <span class="h-2 w-2 rounded-full bg-ink-3/40" aria-hidden="true"></span>
+          <span class="h-2 w-2 rounded-full bg-ink-3/40" aria-hidden="true"></span>
+          <span class="h-2 w-2 rounded-full bg-ink-3/40" aria-hidden="true"></span>
+          <span class="mono ml-2 text-[11px] text-ink-3">{stack.filename}</span>
+
+          <button
+            type="button"
+            data-copy
+            data-target="stack-code"
+            class="pill ml-auto transition-colors hover:text-ink"
+            aria-label="Copy stack JSON"
+          >
+            <Icon name="copy" size={12} />
+            <span data-copy-label>Copy</span>
+          </button>
+        </div>
+
+        <pre class="min-w-0 overflow-x-auto p-5 md:p-6"><code
+            id="stack-code"
+            class="mono block text-[12.5px] leading-[1.75] text-[#d7dbe0]"
+            set:html={highlighted}
+          ></code></pre>
+      </div>
+
+      <p class="mono mt-4 flex items-center gap-2 text-[11px] text-ink-3">
+        <span class="dot dot-idle"></span>
+        A working set, not a fixed identity.
+      </p>
+    </div>
+  </div>
+</section>

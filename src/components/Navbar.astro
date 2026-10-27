@@ -1,0 +1,76 @@
+---
+import { profile } from "../content/profile";
+import Icon from "./Icon.astro";
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-line bg-paper/80 backdrop-blur-xl backdrop-saturate-150"
+>
+  <div class="wrap flex h-[68px] items-center gap-6">
+    <a
+      href="#top"
+      class="flex items-center gap-1.5 text-[19px] font-bold tracking-[-0.055em] text-ink"
+    >
+      {profile.wordmark}<span class="mb-2 h-1.5 w-1.5 rounded-full bg-accent"></span>
+    </a>
+
+    <nav class="ml-4 hidden items-center gap-1 md:flex" aria-label="Primary">
+      {
+        profile.nav.map((item) => (
+          <a
+            href={item.href}
+            class="rounded-lg px-2.5 py-2 text-[14px] font-medium text-ink-2 transition-colors hover:text-ink"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2">
+      <a href={profile.ctas.secondary.href} class="btn btn-primary btn-sm hidden md:inline-flex">
+        {profile.ctas.secondary.label}
+        <Icon name="arrow-up-right" size={14} />
+      </a>
+
+      <button
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Toggle menu"
+        class="grid h-9 w-9 place-items-center rounded-lg text-ink-2 shadow-[inset_0_0_0_1px_var(--color-line)] transition-colors hover:text-ink md:hidden"
+      >
+        <Icon name="menu" size={18} />
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="mobile-nav"
+    hidden
+    class="absolute inset-x-0 top-full border-b border-line bg-paper md:hidden"
+  >
+    <nav class="wrap flex flex-col py-3" aria-label="Mobile">
+      {
+        profile.nav.map((item) => (
+          <a
+            href={item.href}
+            data-nav-link
+            class="rounded-lg px-1 py-3 text-[15px] font-medium text-ink-2 transition-colors hover:text-ink"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a
+        href={profile.ctas.secondary.href}
+        data-nav-link
+        class="btn btn-primary mt-3 mb-1 w-full"
+      >
+        {profile.ctas.secondary.label}
+        <Icon name="arrow-up-right" size={15} />
+      </a>
+    </nav>
+  </div>
+</header>

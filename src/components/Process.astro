@@ -1,0 +1,33 @@
+---
+import { profile } from "../content/profile";
+import SectionHead from "./SectionHead.astro";
+---
+
+<section id="process" class="wrap pt-[110px] md:pt-[140px]">
+  <SectionHead
+    kicker="HOW I WORK"
+    title="A loop, not a handoff"
+    lede="The work moves in short passes. Each one is small enough to finish and honest enough to learn from."
+  />
+
+  <ol class="mt-12 grid border-t border-ink md:grid-cols-2 lg:grid-cols-4">
+    {
+      profile.process.map((step, index) => (
+        <li
+          class={`reveal border-b border-line py-7 lg:border-b-0 lg:pr-7 ${
+            index > 0 ? "lg:border-l lg:border-line lg:pl-7" : ""
+          }`}
+          style={`--reveal-delay:${index * 80}ms`}
+        >
+          <span class="mono block text-[clamp(46px,5vw,64px)] leading-none tracking-[-0.05em] text-[#1f2026]">
+            {step.index}
+          </span>
+          <h3 class="mt-5 text-[22px] font-semibold tracking-[-0.035em]">{step.title}</h3>
+          <p class="mt-2.5 max-w-[290px] text-[14.5px] leading-[1.6] text-ink-2">
+            {step.description}
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
