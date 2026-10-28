@@ -32,7 +32,6 @@ Open [`src/content/profile.ts`](src/content/profile.ts). Search for `TODO` to fi
 | --- | --- | --- |
 | Navbar | `name`, `wordmark`, `nav`, `ctas` | Brand, links, and the contact button |
 | Hero | `headline`, `lede`, `tagline`, `avatar`, `cv`, `heroCard`, `marquee` | Headline, photo, CV download, glass profile card, icon ticker |
-| What I do / How I work | `pillars`, `process` | Two-column capability sheet with a compact four-step loop |
 | Work | `projectsKicker`, `projectsTitle`, `projectsLede`, `projects` | Project cards: banner, tags, expandable tech stack, GitHub link |
 | Stack | `stack` | Code block content, focus areas, principles |
 | Numbers | `stats` | Animated stat row |

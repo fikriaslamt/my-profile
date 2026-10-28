@@ -8,18 +8,6 @@
 
 export type NavItem = { label: string; href: string };
 
-export type Pillar = {
-  label: string;
-  title: string;
-  description: string;
-};
-
-export type Step = {
-  index: string;
-  title: string;
-  description: string;
-};
-
 export type ProjectStack = {
   label: string;
   value: string;
@@ -120,50 +108,9 @@ export const profile = {
   /* ── Navigation ─────────────────────────────────────────── */
   nav: [
     { label: "Work", href: "#work" },
-    { label: "Process", href: "#process" },
     { label: "About", href: "#about" },
     { label: "Contact", href: "#contact" },
   ] satisfies NavItem[],
-
-  /* ── Two pillars ("What I do") ──────────────────────────── */
-  pillars: [
-    {
-      label: "BACKEND",
-      title: "APIs and data that stay honest",
-      description:
-        "I build backend services that are predictable to call, easy to test, and straightforward to maintain as the product grows.",
-    },
-    {
-      label: "CLOUD & DELIVERY",
-      title: "Ship it, then keep it running",
-      description:
-        "Deployment is part of the feature. I work on service packaging, delivery workflows, and the observability that makes production behavior visible.",
-    },
-  ] satisfies Pillar[],
-
-  /* ── Process stepper ────────────────────────────────────── */
-  process: [
-    {
-      index: "01",
-      title: "Understand",
-      description: "Start with the use case, constraints, and failure modes.",
-    },
-    {
-      index: "02",
-      title: "Model",
-      description: "Sketch the API contract and schema before code.",
-    },
-    {
-      index: "03",
-      title: "Build",
-      description: "Ship the smallest working slice with tests.",
-    },
-    {
-      index: "04",
-      title: "Harden",
-      description: "Add logs, deploy, and watch real behavior.",
-    },
-  ] satisfies Step[],
 
   /* ── Projects ───────────────────────────────────────────── */
   projectsKicker: "SELECTED WORK",
@@ -349,7 +296,6 @@ export const profile = {
         title: "Navigate",
         links: [
           { label: "Work", href: "#work" },
-          { label: "Process", href: "#process" },
           { label: "Stack", href: "#stack" },
           { label: "About", href: "#about" },
         ],
