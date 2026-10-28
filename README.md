@@ -46,7 +46,7 @@ Things worth knowing:
 - **`tagline`** can be left empty; the hero then builds `role · location · availability` automatically.
 - **Stats** use `value` (number, animated on scroll) plus an optional `suffix` such as `+`.
 - **Marquee** items are `{ label, icon }`; `TechIcon` resolves brands via `simple-icons`, with lucide for REST/Cloud.
-- **CV** points to `public/cv/fikri-aslam-cv.pdf`; replace the file and keep the path. The hero button downloads it.
+- **Resume** points to `https://resume.fikriaslam.my.id/` via `cv.href`; the hero button opens it in a new tab.
 - **Avatar** points to `public/profile-picture.jpeg`; replace the image to update the hero card.
 - **Project `href`** is the GitHub repo URL; `image` is the banner and `stack` is the expandable detail.
 - **Social icons** support `github`, `linkedin`, `x`, and `mail`.

@@ -79,9 +79,8 @@ export const profile = {
     secondary: { label: "Contact me", href: "#contact" },
   },
   cv: {
-    label: "Download CV",
-    href: "/cv/fikri-aslam-cv.pdf",
-    filename: "Fikri-Aslam-CV.pdf",
+    label: "Resume",
+    href: "https://resume.fikriaslam.my.id/",
   },
   marquee: [
     { label: "Go", icon: "go" },
