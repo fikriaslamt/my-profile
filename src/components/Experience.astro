@@ -24,12 +24,7 @@ const isPresent = (end: string) => end.toLowerCase() === "present";
       subtitle="Where I've worked, what I studied, and the programs that shaped how I build."
     />
 
-    <ol class="relative mt-12 max-w-[760px]">
-      <span
-        class="absolute bottom-4 left-[15px] top-4 w-px bg-line"
-        aria-hidden="true"
-      ></span>
-
+    <ol class="mt-12 max-w-[760px]">
       {
         experience.map((job, index) => (
           <li
@@ -43,10 +38,10 @@ const isPresent = (end: string) => end.toLowerCase() === "present";
                   alt=""
                   width="32"
                   height="32"
-                  class="h-8 w-8 rounded-full border border-line bg-card object-cover"
+                  class="h-8 w-8 rounded-lg border border-line bg-card object-contain"
                 />
               ) : (
-                <span class="mono grid h-8 w-8 place-items-center rounded-full border border-line bg-paper text-[10px] font-medium text-ink-2">
+                <span class="mono grid h-8 w-8 place-items-center rounded-lg border border-line bg-paper text-[10px] font-medium text-ink-2">
                   {monogram(job.company)}
                 </span>
               )}
