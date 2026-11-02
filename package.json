@@ -8,6 +8,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "typecheck": "astro check",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -17,11 +21,18 @@
     "astro": "^7.4.2",
     "sharp": "^0.35.5",
     "simple-icons": "^16.36.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@playwright/test": "^1.64.1",
-    "typescript": "^5.9.0"
+    "eslint": "^9.39.5",
+    "eslint-plugin-astro": "^1.7.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.72.1"
   }
 }

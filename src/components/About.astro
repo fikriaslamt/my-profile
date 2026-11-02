@@ -1,0 +1,104 @@
+---
+import { Picture } from "astro:assets";
+import { profile } from "../content/profile";
+import { experience } from "../content/experience";
+import SectionHeading from "./SectionHeading.astro";
+
+const [first, second] = profile.heroPhotos;
+const currentRole = experience.find((job) => job.end.toLowerCase() === "present");
+---
+
+<section id="about" class="section border-t border-line">
+  <div class="wrap grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+    <div>
+      <SectionHeading
+        label="About"
+        index="03"
+        title="I like systems that stay boring."
+        subtitle="Backend work, mostly — the parts you only notice when they break."
+      />
+
+      <div class="mt-7 max-w-[58ch] space-y-4">
+        {
+          profile.bio.map((paragraph, index) => (
+            <p
+              class="reveal text-[15.5px] leading-[1.7] text-ink-2"
+              style={`--reveal-delay:${index * 50}ms`}
+            >
+              {paragraph}
+            </p>
+          ))
+        }
+      </div>
+
+      <dl class="reveal mt-9 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-line pt-6">
+        {
+          profile.facts.map((fact) => (
+            <div>
+              <dt class="mono text-[10px] uppercase tracking-[0.12em] text-ink-3">{fact.label}</dt>
+              <dd class="mt-1 text-[14px] font-medium text-ink">{fact.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <div class="reveal relative mx-auto aspect-[4/5] w-full max-w-[440px]">
+      {
+        first && (
+          <figure class="absolute left-0 top-0 z-10 w-[68%] rotate-[-4deg] overflow-hidden rounded-2xl border border-line bg-card shadow-[var(--shadow-card)]">
+            <Picture
+              src={first.src}
+              alt={first.alt}
+              formats={["avif", "webp"]}
+              widths={[240, 360, 480]}
+              sizes="(min-width: 1024px) 300px, 60vw"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[3/4] w-full object-cover"
+            />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-3 pb-2 pt-8">
+              <span class="mono text-[10.5px] tracking-[0.04em] text-white/90">
+                {first.caption}
+              </span>
+            </figcaption>
+          </figure>
+        )
+      }
+
+      {
+        second && (
+          <aside class="absolute bottom-0 right-0 w-[62%] rotate-[4deg] rounded-2xl border border-line bg-card p-4 shadow-[var(--shadow-card)]">
+            <p class="mono text-[9.5px] uppercase tracking-[0.14em] text-ink-3">Currently</p>
+            <p class="mt-2 text-[14px] font-semibold leading-snug tracking-[-0.015em]">
+              {currentRole ? `${currentRole.role} at ${currentRole.company}` : profile.role}
+            </p>
+            <p class="mt-1.5 text-[12px] leading-[1.5] text-ink-2">
+              {profile.facts.find((fact) => fact.label === "Focus")?.value}
+            </p>
+
+            <div class="mt-4 flex items-center gap-2 border-t border-line pt-3">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="mono text-[10px] uppercase tracking-[0.08em] text-ink-2">
+                {profile.availability.label}
+              </span>
+            </div>
+
+            <p class="mono mt-3 text-[9.5px] uppercase tracking-[0.12em] text-ink-3">
+              Lampung, ID · {profile.timezone}
+            </p>
+          </aside>
+        )
+      }
+
+      <div
+        class="absolute right-2 top-1 z-20 rounded-full border border-line bg-card px-3 py-1.5 shadow-[var(--shadow-card)]"
+      >
+        <span class="mono flex items-center gap-2 text-[10px] uppercase tracking-[0.1em] text-ink-2">
+          <span class="dot" aria-hidden="true"></span>
+          {profile.location.split(",")[0]}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

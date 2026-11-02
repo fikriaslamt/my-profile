@@ -1,56 +1,59 @@
 ---
 import { profile } from "../content/profile";
+import { socials } from "../content/social";
 import Icon from "./Icon.astro";
-
-const year = new Date().getFullYear();
+import Social from "./Social.astro";
 ---
 
-<footer class="mt-[120px] border-t border-line md:mt-[140px]">
-  <div class="wrap flex flex-wrap gap-12 py-12 md:py-14">
-    <div class="min-w-[240px] flex-1">
+<footer class="border-t border-line">
+  <div class="wrap flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between">
+    <div>
       <a
-        href="#top"
-        class="inline-flex items-center gap-1.5 text-[19px] font-bold tracking-[-0.055em] text-ink"
+        href="#home"
+        class="inline-flex items-center gap-1.5 text-[18px] font-semibold tracking-[-0.03em]"
       >
-        {profile.wordmark}<span class="mb-2 h-1.5 w-1.5 rounded-full bg-accent"></span>
+        {profile.fullName.split(" ").slice(0, 2).join(" ")}
+        <span class="mb-1.5 h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
       </a>
-      <p class="mt-4 max-w-[320px] text-[13.5px] leading-[1.6] text-ink-3">
-        {profile.footer.note}
-      </p>
-      <p class="mono mt-5 flex items-center gap-2 text-[11px] text-ink-3">
-        <span class="dot"></span>
-        {profile.availability}
+      <p class="mt-2 max-w-[42ch] text-[13.5px] leading-[1.6] text-ink-3">{profile.tagline}</p>
+      <p class="mono mt-4 flex items-center gap-2 text-[10.5px] uppercase tracking-[0.1em] text-ink-3">
+        <span class="dot" aria-hidden="true"></span>
+        {profile.availability.label} · {profile.location.split(",")[0]}
       </p>
     </div>
 
-    {
-      profile.footer.columns.map((column) => (
-        <div class="flex min-w-[140px] flex-col gap-2.5">
-          <span class="mono mb-1 text-[10px] uppercase tracking-[0.1em] text-ink-3">
-            {column.title}
-          </span>
-          {column.links.map((link) => (
+    <div class="flex flex-col gap-5 md:items-end">
+      <div class="flex items-center gap-1">
+        {
+          socials.map((social) => (
             <a
-              href={link.href}
-              class="text-[13.5px] text-ink-2 transition-colors hover:text-ink"
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              class="icon-btn"
             >
-              {link.label}
+              <Social icon={social.icon} size={16} />
             </a>
-          ))}
-        </div>
-      ))
-    }
+          ))
+        }
+      </div>
+      <a
+        href="#home"
+        class="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-2 transition-colors hover:text-ink"
+      >
+        Back to top
+        <Icon name="arrow-up" size={14} />
+      </a>
+    </div>
   </div>
 
   <div class="border-t border-line">
     <div
-      class="wrap mono flex flex-wrap items-center justify-between gap-3 py-5 text-[10.5px] text-ink-3"
+      class="wrap mono flex flex-wrap items-center justify-between gap-3 py-5 text-[10.5px] tracking-[0.02em] text-ink-3"
     >
-      <span>© {year} {profile.name}. All rights reserved.</span>
-      <a href="#top" class="inline-flex items-center gap-1.5 transition-colors hover:text-ink">
-        Back to top
-        <Icon name="arrow-up-right" size={12} />
-      </a>
+      <span>© <span data-year>{new Date().getFullYear()}</span> {profile.fullName}</span>
+      <span>Built with Astro &amp; Tailwind CSS</span>
     </div>
   </div>
 </footer>

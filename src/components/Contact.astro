@@ -1,67 +1,156 @@
 ---
 import { profile } from "../content/profile";
+import { socials } from "../content/social";
 import Icon from "./Icon.astro";
 import Social from "./Social.astro";
 
-const contact = profile.contact;
-const mailto = `mailto:${contact.email}`;
+const inputClass =
+  "w-full rounded-xl border border-line bg-paper px-4 py-3 text-[15px] text-ink placeholder:text-ink-3/70 transition-colors focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent-soft aria-invalid:border-danger aria-invalid:ring-4 aria-invalid:ring-danger/10";
+const labelClass = "mono block text-[10.5px] uppercase tracking-[0.12em] text-ink-3";
+const errorClass = "mt-1.5 text-[12px] text-danger";
 ---
 
-<section id="contact" class="wrap pt-[120px] md:pt-[160px]">
-  <div
-    class="card reveal relative overflow-hidden rounded-[12px] px-6 py-12 md:px-12 md:py-16"
-  >
-    <div class="grid-bg pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
+<section id="contact" class="section border-t border-line">
+  <div class="wrap">
     <div
-      class="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-accent/10 blur-[80px]"
-      aria-hidden="true"
+      class="reveal relative overflow-hidden rounded-3xl border border-line bg-card p-6 md:p-10 lg:p-12"
     >
-    </div>
-
-    <div class="relative max-w-[900px]">
-      <p class="kick"><span class="dot"></span>{contact.kicker}</p>
-
-      <h2
-        class="mt-5 text-[clamp(40px,6vw,84px)] font-semibold leading-[0.98] tracking-[-0.055em]"
+      <div
+        class="pointer-events-none absolute -right-40 -top-40 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,var(--glow),transparent_70%)]"
+        aria-hidden="true"
       >
-        {contact.title.before}<span class="hl">{contact.title.highlight}</span>{contact.title.after}
-      </h2>
-
-      <p class="mt-6 max-w-[600px] text-[16.5px] leading-[1.6] text-ink-2 md:text-[17.5px]">
-        {contact.lede}
-      </p>
-
-      <div class="mt-9 flex flex-wrap items-center gap-2.5">
-        <a href={mailto} class="btn btn-primary h-12 px-6">
-          <Icon name="mail" size={16} />
-          {contact.emailLabel}
-          <Icon name="arrow-up-right" size={15} />
-        </a>
-        <button type="button" data-copy data-target="contact-email" class="btn btn-line h-12 px-5">
-          <Icon name="copy" size={15} />
-          <span data-copy-label>Copy email</span>
-        </button>
       </div>
 
-      <p class="mono mt-6 text-[11px] leading-[1.6] text-ink-3">{contact.note}</p>
+      <div class="relative grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+        <div>
+          <p class="label">
+            <span class="h-px w-6 bg-accent" aria-hidden="true"></span>
+            <span>Contact</span>
+            <span class="text-ink-3/70">— 05</span>
+          </p>
 
-      <div class="mt-8 flex flex-wrap gap-2">
-        {
-          contact.socials.map((social) => (
+          <h2 class="heading mt-5">Get in touch</h2>
+          <p class="mt-4 max-w-[46ch] text-[15.5px] leading-[1.7] text-ink-2">
+            I'm open to backend engineering roles and freelance work around APIs, data, and cloud
+            delivery. Tell me what you're building — I usually reply within a day.
+          </p>
+
+          <div class="mt-7 flex flex-wrap gap-2.5">
             <a
-              href={social.href}
-              class="pill h-9 gap-2 px-3.5 text-[12px] text-ink-2 transition-colors hover:text-ink"
+              href={profile.bookingUrl}
+              target="_blank"
               rel="noopener noreferrer"
-              target={social.href.startsWith("http") ? "_blank" : undefined}
+              class="btn btn-accent"
             >
-              <Social icon={social.icon} size={14} />
-              {social.label}
+              Book a call
+              <Icon name="calendar" size={16} />
             </a>
-          ))
-        }
-      </div>
+            <a href={`mailto:${profile.email}`} class="btn btn-outline">
+              Email me
+              <Icon name="mail" size={16} />
+            </a>
+          </div>
 
-      <span id="contact-email" class="sr-only">{contact.email}</span>
+          <div class="mt-8 border-t border-line pt-6">
+            <p class="mono text-[10px] uppercase tracking-[0.12em] text-ink-3">Elsewhere</p>
+            <div class="mt-3 flex items-center gap-1">
+              {
+                socials.map((social) => (
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    class="icon-btn shadow-[inset_0_0_0_1px_var(--color-line)]"
+                  >
+                    <Social icon={social.icon} size={16} />
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <form
+          data-contact-form
+          data-contact-email={profile.email}
+          novalidate
+          class="grid content-start gap-4"
+          aria-label="Contact form"
+        >
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="contact-name" class={labelClass}>Full name</label>
+              <input
+                id="contact-name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+                placeholder="Your name"
+                aria-describedby="contact-name-error"
+                class={`${inputClass} mt-2`}
+              />
+              <p id="contact-name-error" data-error-for="name" hidden class={errorClass}></p>
+            </div>
+
+            <div>
+              <label for="contact-email" class={labelClass}>Email</label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                placeholder="you@example.com"
+                aria-describedby="contact-email-error"
+                class={`${inputClass} mt-2`}
+              />
+              <p id="contact-email-error" data-error-for="email" hidden class={errorClass}></p>
+            </div>
+          </div>
+
+          <div>
+            <label for="contact-message" class={labelClass}>Message</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="5"
+              required
+              placeholder="What are you working on?"
+              aria-describedby="contact-message-error"
+              class={`${inputClass} mt-2 resize-y`}></textarea>
+            <p id="contact-message-error" data-error-for="message" hidden class={errorClass}></p>
+          </div>
+
+          <div class="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            <label for="contact-company">Company</label>
+            <input id="contact-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button type="submit" data-form-submit class="btn btn-primary" aria-busy="false">
+              <span data-submit-label>Send message</span>
+              <Icon name="send" size={15} />
+            </button>
+            <p
+              data-form-status
+              role="status"
+              aria-live="polite"
+              class="text-[12.5px] leading-[1.5] text-ink-3 data-[tone=success]:text-accent data-[tone=error]:text-danger"
+            >
+            </p>
+          </div>
+
+          <p class="text-[11.5px] leading-[1.5] text-ink-3">
+            No account needed. Your details are only used to reply.
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  import "../scripts/contact";
+</script>

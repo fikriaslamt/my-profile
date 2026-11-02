@@ -8,10 +8,11 @@ const escapeXml = (value: string) =>
     .replace(/"/g, "&quot;");
 
 export const buildOgSvg = () => {
-  const name = escapeXml(profile.name);
+  const name = escapeXml(profile.fullName);
   const role = escapeXml(profile.role);
   const location = escapeXml(profile.location);
   const wordmark = escapeXml(profile.wordmark);
+  const availability = escapeXml(profile.availability.label.toUpperCase());
   const site = escapeXml(profile.seo.site.replace(/^https?:\/\//, ""));
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
@@ -42,7 +43,7 @@ export const buildOgSvg = () => {
   <g transform="translate(80 476)">
     <rect width="150" height="34" rx="8" fill="rgba(124,255,178,0.1)"/>
     <circle cx="18" cy="17" r="4" fill="#7cffb2"/>
-    <text x="32" y="22" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="#7cffb2">AVAILABLE</text>
+    <text x="32" y="22" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="#7cffb2">${availability}</text>
   </g>
 
   <g font-family="Geist Mono, ui-monospace, monospace" fill="#737373" font-size="15">

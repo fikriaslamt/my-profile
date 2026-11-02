@@ -1,72 +1,53 @@
 ---
 import {
   ArrowUpRight,
-  ArrowDown,
   ArrowRight,
-  Copy,
-  Check,
+  ArrowUp,
+  ArrowDown,
+  Menu,
+  X,
   Sun,
   Moon,
   Monitor,
-  Download,
+  Check,
   Mail,
-  MapPin,
-  Sparkles,
-  Zap,
-  Menu,
-  X,
-  Terminal,
-  Rocket,
-  Boxes,
-  Palette,
-  Workflow,
+  Download,
   Send,
-  Layers,
-  Code,
-  CircleDot,
-  Braces,
-  Globe,
+  LoaderCircle,
+  Calendar,
+  MapPin,
 } from "@lucide/astro";
 
 const icons = {
   "arrow-up-right": ArrowUpRight,
-  "arrow-down": ArrowDown,
   "arrow-right": ArrowRight,
-  copy: Copy,
-  check: Check,
+  "arrow-up": ArrowUp,
+  "arrow-down": ArrowDown,
+  menu: Menu,
+  x: X,
   sun: Sun,
   moon: Moon,
   monitor: Monitor,
-  download: Download,
+  check: Check,
   mail: Mail,
-  "map-pin": MapPin,
-  sparkles: Sparkles,
-  zap: Zap,
-  menu: Menu,
-  x: X,
-  terminal: Terminal,
-  rocket: Rocket,
-  boxes: Boxes,
-  palette: Palette,
-  workflow: Workflow,
+  download: Download,
   send: Send,
-  layers: Layers,
-  code: Code,
-  "circle-dot": CircleDot,
-  braces: Braces,
-  globe: Globe,
-};
+  loader: LoaderCircle,
+  calendar: Calendar,
+  "map-pin": MapPin,
+} as const;
+
+export type IconName = keyof typeof icons;
 
 interface Props {
-  name: keyof typeof icons;
+  name: IconName;
   size?: number;
   strokeWidth?: number;
   class?: string;
 }
 
 const { name, size = 16, strokeWidth = 1.75, class: className = "" } = Astro.props;
-
-const Icon = icons[name] ?? Sparkles;
+const Component = icons[name] ?? ArrowUpRight;
 ---
 
-<Icon size={size} stroke-width={strokeWidth} class={className} aria-hidden="true" />
+<Component size={size} stroke-width={strokeWidth} class={className} aria-hidden="true" />

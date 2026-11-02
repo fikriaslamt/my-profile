@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(npm:*)",
+      "Shell(mkdir:*)",
+      "Shell(git:*)",
+      "Shell(node --input-type=module -e import sharp from 'sharp'; import {readFileSync} from 'node:fs'; const svg=readFileSync('public/favicon.svg'); await sharp(svg).resize(180,180).png().toFile('public/apple-touch-icon.png'); await sharp(svg).resize(32,32).png().toFile('public/favicon-32.png'); console.log('icons written');)",
+      "Shell(cat .gitignore 2>/dev/null; echo \"---\"; cat netlify.toml)",
+      "Shell(ls node_modules/@astrojs 2>/dev/null; echo \"---\"; npm ls --depth=0 2>&1 | head -30; echo \"---\"; ls node_modules/.package-lock.json >/dev/null && grep -o '\"node_modules/@astrojs/check\"' node_modules/.package-lock.json | head)",
+      "Shell(ls:*)",
+      "Shell(ls -d node_modules/@astrojs/check node_modules/typescript node_modules/eslint node_modules/@playwright/test 2>&1; echo \"---\"; NODE_ENV=development npm run check 2>&1 | tail -60)",
+      "Shell(sleep:*)",
+      "Shell(curl -sI http://localhost:4321)",
+      "Shell(NODE_ENV=development node scripts/capture.mjs 2 >& 1)",
+      "Shell(NODE_ENV=development node scripts/debug.mjs 2 >& 1)",
+      "Shell(lsof:*)",
+      "Shell(curl -s http://localhost:4322)",
+      "Shell(sed:*)",
+      "Shell(NODE_ENV=development npx astro preview --port 4322)",
+      "Shell(NODE_ENV=development node scripts/interact.mjs 2 >& 1)",
+      "Shell(NODE_ENV=development node --input-type=module -e  import { chromium } from '@playwright/test'; const b = await chromium.launch({ channel: 'chrome' }); for (const scheme of ['light','dark']) { const c = await b.newContext({ viewport:{width:1440,height:900}, colorScheme: scheme, reducedMotion: 'reduce' }); const p = await c.newPage(); await p.goto('http://localhost:4322', { waitUntil:'networkidle' }); await p.waitForTimeout(500); for (const id of ['projects','experiments']) { const el = p.locator('#'+id); await el.scrollIntoViewIfNeeded(); await p.waitForTimeout(300); await el.screenshot({ path: process.env.COMMANDCODE_SCRATCHPAD + '/' + id + '-' + scheme + '.png' }); } await c.close(); } await b.close(); console.log('done');  2 >& 1)",
+      "Shell(NODE_ENV=development node --input-type=module -e  import { chromium } from '@playwright/test'; const b = await chromium.launch({ channel: 'chrome' }); const c = await b.newContext({ viewport:{width:1440,height:900}, colorScheme:'light', reducedMotion:'reduce' }); const p = await c.newPage(); await p.goto('http://localhost:4322', { waitUntil:'networkidle' }); await p.waitForTimeout(500); for (const id of ['projects','experiments']) { const el = p.locator('#'+id); await el.scrollIntoViewIfNeeded(); await p.waitForTimeout(250); await el.screenshot({ path: process.env.COMMANDCODE_SCRATCHPAD + '/' + id + '-v2.png' }); } await b.close(); console.log('ok');  2 >& 1)",
+      "Shell(rm -f scripts/capture.mjs scripts/debug.mjs scripts/interact.mjs && rmdir scripts 2>/dev/null; git status --short | head -30)",
+      "Shell(NODE_ENV=development node --input-type=module -e  import { chromium } from '@playwright/test'; const b = await chromium.launch({ channel:'chrome' }); const p = await b.newPage({ viewport:{width:1440,height:900} }); await p.goto('http://localhost:4321/#contact', { waitUntil:'networkidle' }); const submit = p.locator('[data-form-submit]'); await submit.click(); await p.waitForTimeout(200); console.log('after empty:', await p.locator('[data-form-status]').textContent()); await p.fill('#contact-name','Ada Lovelace'); await p.fill('#contact-email','not-an-email'); await p.fill('#contact-message','Hello, I would like to talk about a backend project.'); console.log('values:', await p.evaluate(() => ({ name: document.querySelector('#contact-name').value, email: document.querySelector('#contact-email').value, msg: document.querySelector('#contact-message').value }))); await submit.click(); await p.waitForTimeout(400); console.log('status:', await p.locator('[data-form-status]').textContent()); console.log('email error:', JSON.stringify(await p.locator('[data-error-for=email]').textContent())); console.log('name error:', JSON.stringify(await p.locator('[data-error-for=name]').textContent())); console.log('invalid attrs:', await p.evaluate(() => [...document.querySelectorAll('[data-error-for]')].map(n => ({f:n.dataset.errorFor, hidden:n.hidden, text:n.textContent, inv:document.querySelector('#contact-'+n.dataset.errorFor)?.getAttribute('aria-invalid')})))); await b.close();  2 >& 1)",
+      "Shell(NODE_ENV=development node --input-type=module -e  import { chromium } from '@playwright/test'; const b = await chromium.launch({ channel:'chrome' }); for (const scheme of ['light','dark']) { const c = await b.newContext({ viewport:{width:1440,height:900}, colorScheme:scheme, reducedMotion:'reduce' }); const p = await c.newPage(); await p.goto('http://localhost:4322', { waitUntil:'networkidle' }); const el = p.locator('#work'); await el.scrollIntoViewIfNeeded(); await p.waitForTimeout(300); await el.screenshot({ path: process.env.COMMANDCODE_SCRATCHPAD + '/work-' + scheme + '.png' }); await c.close(); } await b.close(); console.log('shots ok');  2 >& 1)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

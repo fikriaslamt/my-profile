@@ -1,0 +1,69 @@
+---
+import { experiments } from "../content/experiments";
+import { socials } from "../content/social";
+import SectionHeading from "./SectionHeading.astro";
+import Icon from "./Icon.astro";
+
+const github = socials.find((social) => social.icon === "github");
+---
+
+<section id="experiments" class="section border-t border-line">
+  <div class="wrap">
+    <SectionHeading
+      label="Side quests"
+      index="02"
+      title="Small Experiments"
+      subtitle="Smaller builds where I try an idea, break something, and learn a little. Most of them live on GitHub."
+    />
+
+    <ul class="mt-10 border-t border-line">
+      {
+        experiments.map((experiment, index) => (
+          <li class="reveal" style={`--reveal-delay:${index * 60}ms`}>
+            <a
+              href={experiment.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group flex items-start gap-4 border-b border-line px-2 py-4 transition-colors hover:bg-card md:items-center md:px-4 md:py-5"
+            >
+              <span class="mono w-6 flex-none pt-0.5 text-[10.5px] text-ink-3 md:pt-0">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+
+              <span class="min-w-0 flex-1">
+                <span class="block text-[15px] font-semibold tracking-[-0.02em] transition-colors group-hover:text-accent">
+                  {experiment.title}
+                </span>
+                <span class="mt-1 block max-w-[68ch] text-[13.5px] leading-[1.55] text-ink-2">
+                  {experiment.description}
+                </span>
+              </span>
+
+              <span
+                class="grid h-8 w-8 flex-none place-items-center rounded-full border border-line text-ink-3 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-accent-ink"
+              >
+                <Icon name="arrow-up-right" size={14} class="arrow-slide" />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      github && (
+        <p class="reveal mt-8">
+          <a
+            href={github.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex items-center gap-2 text-[14px] font-medium text-ink-2 transition-colors hover:text-ink"
+          >
+            More builds on GitHub
+            <Icon name="arrow-right" size={15} class="arrow-slide" />
+          </a>
+        </p>
+      )
+    }
+  </div>
+</section>

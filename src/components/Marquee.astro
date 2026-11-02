@@ -1,0 +1,24 @@
+---
+import { stack } from "../content/stack";
+import TechIcon from "./TechIcon.astro";
+---
+
+<div class="reveal marquee border-y border-line py-4">
+  <div class="marquee-track">
+    {
+      [0, 1].map((copy) => (
+        <ul
+          class={`flex items-center ${copy === 1 ? "marquee-dup" : ""}`}
+          aria-hidden={copy === 1 ? "true" : undefined}
+        >
+          {stack.map((item) => (
+            <li class="mono flex items-center gap-2.5 px-5 text-[11px] uppercase tracking-[0.12em] text-ink-3">
+              <TechIcon name={item.icon} size={14} />
+              {item.name}
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</div>
