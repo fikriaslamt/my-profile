@@ -9,8 +9,8 @@ import Icon from "./Icon.astro";
     aria-haspopup="menu"
     aria-controls="theme-menu"
     aria-expanded="false"
-    aria-label="Change theme (current: System)"
-    title="Theme: System"
+    aria-label="Change theme (current: Light)"
+    title="Theme: Light"
     class="icon-btn"
   >
     <span class="relative block h-[18px] w-[18px]" aria-hidden="true">
@@ -37,7 +37,7 @@ import Icon from "./Icon.astro";
     <button
       type="button"
       role="menuitemradio"
-      aria-checked="true"
+      aria-checked="false"
       data-theme-option="system"
       tabindex="-1"
       class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"
@@ -50,7 +50,7 @@ import Icon from "./Icon.astro";
     <button
       type="button"
       role="menuitemradio"
-      aria-checked="false"
+      aria-checked="true"
       data-theme-option="light"
       tabindex="-1"
       class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"

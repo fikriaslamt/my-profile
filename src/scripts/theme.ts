@@ -9,13 +9,13 @@ const LABELS: Record<ThemeMode, string> = {
 };
 
 const normalize = (value: unknown): ThemeMode =>
-  MODES.includes(value as ThemeMode) ? (value as ThemeMode) : "system";
+  MODES.includes(value as ThemeMode) ? (value as ThemeMode) : "light";
 
 const read = (): ThemeMode => {
   try {
     return normalize(localStorage.getItem(STORAGE_KEY));
   } catch {
-    return "system";
+    return "light";
   }
 };
 
