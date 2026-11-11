@@ -7,6 +7,7 @@
  */
 import type { ImageMetadata } from "astro";
 import photo from "../assets/profile-photo.png";
+import previousPhoto from "../assets/profile-picture.jpeg";
 
 export type HeroPhoto = {
   src: ImageMetadata;
@@ -48,12 +49,12 @@ export const profile = {
   // image files in src/assets and add them to this array.
   heroPhotos: [
     {
-      src: photo,
+      src: previousPhoto,
       alt: "Fikri Aslam in a portrait photo",
       caption: "@fikriaslamt",
     },
     {
-      src: photo,
+      src: previousPhoto,
       alt: "A second portrait of Fikri Aslam",
       caption: "Lampung, ID",
     },
