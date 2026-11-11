@@ -436,7 +436,6 @@
 
 html[data-theme-mode="light"] .theme-icon[data-theme-icon="light"],
 html[data-theme-mode="dark"] .theme-icon[data-theme-icon="dark"],
-html[data-theme-mode="system"] .theme-icon[data-theme-icon="system"],
 html:not([data-theme-mode]) .theme-icon[data-theme-icon="light"] {
   opacity: 1;
   transform: none;
@@ -444,13 +443,6 @@ html:not([data-theme-mode]) .theme-icon[data-theme-icon="light"] {
 
 [data-theme-check] {
   opacity: 0;
-}
-
-html[data-theme-mode="light"] [data-theme-option="light"] [data-theme-check],
-html[data-theme-mode="dark"] [data-theme-option="dark"] [data-theme-check],
-html[data-theme-mode="system"] [data-theme-option="system"] [data-theme-check],
-html:not([data-theme-mode]) [data-theme-option="system"] [data-theme-check] {
-  opacity: 1;
 }
 
 /* Suppress transitions during the initial paint, then add them only when the theme changes. */

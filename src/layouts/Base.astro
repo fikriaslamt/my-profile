@@ -79,13 +79,12 @@ const jsonLdSafe = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
         let mode = "light";
         try {
           const saved = localStorage.getItem("theme");
-          if (saved === "light" || saved === "dark" || saved === "system") mode = saved;
+          if (saved === "light" || saved === "dark") mode = saved;
         } catch {
           /* storage unavailable — default to light */
         }
 
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const resolved = mode === "system" ? (prefersDark ? "dark" : "light") : mode;
+        const resolved = mode;
 
         root.dataset.theme = resolved;
         root.dataset.themeMode = mode;

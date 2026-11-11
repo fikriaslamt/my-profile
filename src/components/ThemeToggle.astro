@@ -2,21 +2,15 @@
 import Icon from "./Icon.astro";
 ---
 
-<div class="relative" data-theme-root>
+<div data-theme-root>
   <button
     type="button"
     data-theme-toggle
-    aria-haspopup="menu"
-    aria-controls="theme-menu"
-    aria-expanded="false"
-    aria-label="Change theme (current: Light)"
+    aria-label="Switch theme (current: Light)"
     title="Theme: Light"
     class="icon-btn"
   >
     <span class="relative block h-[18px] w-[18px]" aria-hidden="true">
-      <span class="theme-icon" data-theme-icon="system">
-        <Icon name="monitor" size={18} />
-      </span>
       <span class="theme-icon" data-theme-icon="light">
         <Icon name="sun" size={18} />
       </span>
@@ -25,54 +19,6 @@ import Icon from "./Icon.astro";
       </span>
     </span>
   </button>
-
-  <div
-    id="theme-menu"
-    data-theme-menu
-    role="menu"
-    aria-label="Theme"
-    hidden
-    class="absolute right-0 top-full z-[70] mt-2 w-48 rounded-xl border border-line bg-card p-1.5 shadow-[var(--shadow-card)]"
-  >
-    <button
-      type="button"
-      role="menuitemradio"
-      aria-checked="false"
-      data-theme-option="system"
-      tabindex="-1"
-      class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"
-    >
-      <Icon name="monitor" size={16} class="text-ink-3" />
-      <span class="flex-1">System</span>
-      <span data-theme-check class="text-accent"><Icon name="check" size={15} /></span>
-    </button>
-
-    <button
-      type="button"
-      role="menuitemradio"
-      aria-checked="true"
-      data-theme-option="light"
-      tabindex="-1"
-      class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"
-    >
-      <Icon name="sun" size={16} class="text-ink-3" />
-      <span class="flex-1">Light</span>
-      <span data-theme-check class="text-accent"><Icon name="check" size={15} /></span>
-    </button>
-
-    <button
-      type="button"
-      role="menuitemradio"
-      aria-checked="false"
-      data-theme-option="dark"
-      tabindex="-1"
-      class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-[13.5px] font-medium text-ink-2 transition-colors hover:bg-card-2 hover:text-ink focus:bg-card-2 focus:text-ink"
-    >
-      <Icon name="moon" size={16} class="text-ink-3" />
-      <span class="flex-1">Dark</span>
-      <span data-theme-check class="text-accent"><Icon name="check" size={15} /></span>
-    </button>
-  </div>
 </div>
 
 <script>
