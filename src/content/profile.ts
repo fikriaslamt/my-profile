@@ -6,7 +6,7 @@
  * ─────────────────────────────────────────────────────────────
  */
 import type { ImageMetadata } from "astro";
-import photo from "../assets/profile-picture.jpeg";
+import photo from "../assets/profile-photo.png";
 
 export type HeroPhoto = {
   src: ImageMetadata;
