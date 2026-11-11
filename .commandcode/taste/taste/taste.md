@@ -7,3 +7,4 @@
 - Prefers real, official image assets over generated monogram/placeholder graphics, even for small logo slots, and suggests concrete official sources himself (e.g. pull a company logo from its LinkedIn page) rather than accepting a redrawn substitute. Confidence: 0.6
 - Wants persistent UI chrome such as the navbar aligned to the same horizontal padding/container as the page content (not full-bleed edge to edge) and given rounded corners. Confidence: 0.6
 - Dislikes decorative connector lines between list items (e.g. the vertical line linking company logos); prefers clean, decoration-free grouping. Confidence: 0.5
+- Communicates in Bahasa Indonesia (including casual bug reports like "di navbar nya kok kosong"); respond in Indonesian. Confidence: 0.8
